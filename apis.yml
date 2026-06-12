@@ -1,0 +1,100 @@
+aid: scylladb
+name: ScyllaDB
+description: >-
+  ScyllaDB is a high-performance distributed NoSQL database engineered for
+  real-time, data-intensive applications, offering close-to-the-metal
+  architecture with predictable single-digit millisecond latencies and millions
+  of operations per second. It is fully compatible with Apache Cassandra's CQL
+  interface and Amazon DynamoDB's API (via Project Alternator), enabling
+  drop-in migration from either platform. ScyllaDB Cloud is a fully managed
+  database-as-a-service available on AWS and GCP, providing a REST management
+  API for automating cluster provisioning, scaling, networking, and
+  configuration. The platform supports vector search, multi-region active-active
+  replication, and a Kubernetes operator for self-managed deployments.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Database
+  - NoSQL
+  - Cassandra Compatible
+  - DynamoDB Compatible
+  - Distributed Database
+  - Real-Time
+  - Vector Search
+  - Cloud Database
+url: https://raw.githubusercontent.com/api-evangelist/scylladb/refs/heads/main/apis.yml
+created: '2026-06-12'
+modified: '2026-06-12'
+specificationVersion: '0.19'
+apis:
+  - aid: scylladb:cloud-management-api
+    name: ScyllaDB Cloud Management API
+    description: >-
+      REST API for programmatic access to ScyllaDB Cloud, enabling automation
+      of cluster provisioning, resizing, deletion, VPC peering, firewall rules,
+      datacenter management, vector search nodes, and account configuration.
+      Authenticated via personal access tokens.
+    humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+    baseURL: https://api.cloud.scylladb.com
+    tags:
+      - Cloud Management
+      - Cluster Operations
+      - Database
+      - NoSQL
+    properties:
+      - type: Documentation
+        url: https://cloud.docs.scylladb.com/stable/api-docs/
+      - type: OpenAPI
+        url: https://api.cloud.scylladb.com/api-docs.json
+  - aid: scylladb:admin-rest-api
+    name: ScyllaDB Admin REST API
+    description: >-
+      Node-level administrative REST API exposing endpoints to check and update
+      configuration, retrieve cluster-level and node-level information, and
+      execute administrative operations. Exposed locally on port 10000 with
+      a Swagger 2.0 definition available at /v2 and an interactive Swagger UI
+      at /ui.
+    humanURL: https://docs.scylladb.com/stable/operating-scylla/rest.html
+    baseURL: http://localhost:10000
+    tags:
+      - Administration
+      - Database
+      - NoSQL
+      - Operations
+    properties:
+      - type: Documentation
+        url: https://docs.scylladb.com/stable/operating-scylla/rest.html
+common:
+  - type: Website
+    url: https://www.scylladb.com/
+  - type: Documentation
+    url: https://docs.scylladb.com/
+  - type: GettingStarted
+    url: https://developers.scylladb.com/stable/
+  - type: GitHubOrganization
+    url: https://github.com/scylladb
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/scylladb
+  - type: X
+    url: https://x.com/ScyllaDB
+  - type: Blog
+    url: https://resources.scylladb.com/blog
+  - type: Pricing
+    url: https://www.scylladb.com/pricing/
+  - type: StatusPage
+    url: https://status.cloud.scylladb.com/
+  - type: ReleaseNotes
+    url: https://www.scylladb.com/product/release-notes/
+  - type: Forum
+    url: https://forum.scylladb.com/
+  - type: University
+    url: https://university.scylladb.com/
+  - type: Plans
+    url: plans/scylladb-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/scylladb-rate-limits.yml
+  - type: FinOps
+    url: finops/scylladb-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

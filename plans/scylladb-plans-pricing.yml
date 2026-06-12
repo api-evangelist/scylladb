@@ -1,0 +1,187 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: ScyllaDB
+providerId: scylladb
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Database
+  - NoSQL
+  - Cloud Database
+  - Managed Service
+description: >-
+  ScyllaDB Cloud offers three service tiers (Standard, Professional, Premium)
+  with resource-based billing across instance type (vCPU/RAM), NVMe SSD
+  storage, and service plan level. Billing options include On-Demand
+  (hourly, no commitment), Fixed Contract (1-3 year, up to 70% savings), and
+  Flex Credits (prepaid pool for dynamic workloads). A 30-day developer trial
+  is available on smaller instances; no per-request charges apply.
+sources:
+  - https://www.scylladb.com/pricing/
+  - https://cloud.docs.scylladb.com/stable/cloud-services/billing.html
+plans:
+  - id: scylladb-trial
+    name: Developer Trial
+    type: free
+    description: >-
+      30-day free trial on smaller instances for developers to evaluate
+      ScyllaDB Cloud capabilities without commitment.
+    entries:
+      - label: Trial Duration
+        name: trial_days
+        type: quota
+        metric: days
+        limit: 30
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Cluster Support
+        name: cluster_support
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+  - id: scylladb-standard
+    name: Standard
+    type: paid
+    description: >-
+      Production workloads with 99.9% uptime SLA, fully managed on AWS and GCP,
+      vector search capabilities included, 2-hour 8x5 P1 support response.
+      Supports On-Demand and Fixed Contract billing.
+    entries:
+      - label: Uptime SLA
+        name: uptime_sla
+        type: boolean
+        metric: percent
+        limit: 99.9
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'resource-based'
+        userMultiplied: false
+      - label: Compute (vCPU)
+        name: vcpu
+        type: metered
+        metric: vCPU-hour
+        limit: -1
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: 'resource-based'
+        userMultiplied: false
+      - label: Storage (NVMe SSD)
+        name: storage_gb
+        type: metered
+        metric: GB-month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'resource-based'
+        userMultiplied: false
+      - label: Support Response (P1)
+        name: p1_support
+        type: boolean
+        metric: hours
+        limit: 2
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'included'
+        userMultiplied: false
+  - id: scylladb-professional
+    name: Professional
+    type: paid
+    description: >-
+      Mission-critical workloads with enhanced observability, customizable
+      maintenance windows, multi-region active-active HA/DR, Bring Your Own
+      Account option, and 1-hour 24x7 P1 support. Supports On-Demand, Fixed
+      Contract, and Flex Credit billing.
+    entries:
+      - label: Uptime SLA
+        name: uptime_sla
+        type: boolean
+        metric: percent
+        limit: 99.9
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'resource-based'
+        userMultiplied: false
+      - label: Multi-Region Active-Active
+        name: multi_region_ha
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'included'
+        userMultiplied: false
+      - label: Support Response (P1 24x7)
+        name: p1_support_24x7
+        type: boolean
+        metric: hours
+        limit: 1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'included'
+        userMultiplied: false
+  - id: scylladb-premium
+    name: Premium
+    type: enterprise
+    description: >-
+      Enterprise environments with 99.99% uptime SLA, advanced networking
+      (Private Link, Transit Gateway), Bring Your Own Key encryption, dedicated
+      Technical Account Manager, and 15-minute 24x7 P1 support. Supports
+      On-Demand, Flexible Contract, and Flex Credit billing.
+    entries:
+      - label: Uptime SLA
+        name: uptime_sla
+        type: boolean
+        metric: percent
+        limit: 99.99
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'resource-based'
+        userMultiplied: false
+      - label: Private Link / Transit Gateway
+        name: advanced_networking
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'included'
+        userMultiplied: false
+      - label: Bring Your Own Key Encryption
+        name: byok_encryption
+        type: boolean
+        metric: feature
+        limit: 1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'included'
+        userMultiplied: false
+      - label: Support Response (P1 24x7)
+        name: p1_support_15min
+        type: boolean
+        metric: minutes
+        limit: 15
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'included'
+        userMultiplied: false

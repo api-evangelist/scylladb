@@ -1,0 +1,75 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: ScyllaDB
+providerId: scylladb
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Database
+  - NoSQL
+  - Cloud Database
+description: >-
+  FOCUS-aligned FinOps profile for ScyllaDB Cloud. Billing is resource-based
+  (vCPU, RAM, NVMe SSD storage) with three service tiers (Standard,
+  Professional, Premium) and three billing options (On-Demand, Fixed Contract,
+  Flex Credits). No per-request charges apply; cost optimization focuses on
+  right-sizing cluster resources, selecting appropriate instance types, and
+  choosing contract vs. on-demand billing based on workload predictability.
+  Contracts offer up to 70% savings over on-demand pricing.
+sources:
+  - https://www.scylladb.com/pricing/
+  - https://cloud.docs.scylladb.com/stable/cloud-services/billing.html
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: ScyllaDB
+serviceCategory: Database
+billingModel:
+  pricingCategory: Resource-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+focusColumns:
+  ServiceName: ScyllaDB Cloud
+  ServiceCategory: Database
+  ProviderName: ScyllaDB
+  PublisherName: ScyllaDB
+  BillingCurrency: USD
+meters:
+  - name: Compute
+    unit: vCPU-hour
+    aggregation: sum
+  - name: Memory
+    unit: GB-hour
+    aggregation: sum
+  - name: Storage
+    unit: GB-month
+    aggregation: sum
+  - name: Network Egress
+    unit: GB
+    aggregation: sum
+  - name: Vector Search Node
+    unit: node-hour
+    aggregation: sum
+principles:
+  - name: Visibility
+    description: >-
+      Track ScyllaDB Cloud consumption monthly by cluster, datacenter, and
+      instance type to understand cost drivers across compute, memory, and
+      storage dimensions.
+  - name: Optimization
+    description: >-
+      Right-size cluster resources (vCPU, RAM, storage) to actual workload
+      needs; migrate from on-demand to fixed contracts or Flex Credits for
+      predictable workloads to achieve up to 70% cost savings.
+  - name: Accountability
+    description: >-
+      Tag clusters by team, application, and environment; use ScyllaDB Cloud
+      account billing reports to allocate database costs to business units and
+      product teams.

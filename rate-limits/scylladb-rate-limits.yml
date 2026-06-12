@@ -1,0 +1,38 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: ScyllaDB
+providerId: scylladb
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Database
+  - NoSQL
+description: >-
+  ScyllaDB Cloud does not publish explicit API rate limits for its Cloud
+  Management REST API in public documentation. The Admin REST API (node-level,
+  port 10000) is intended for internal/administrative use and is not
+  rate-limit-documented publicly. Database-level throughput is bounded by
+  provisioned cluster resources (vCPU, RAM, NVMe storage) rather than
+  per-request quotas — consistent with ScyllaDB's resource-based billing model
+  that contrasts with per-request DynamoDB pricing.
+sources:
+  - https://cloud.docs.scylladb.com/stable/api-docs/
+  - https://docs.scylladb.com/stable/operating-scylla/rest.html
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+limits:
+  - name: ScyllaDB Cloud Management API
+    scope: key
+    metric: requests_per_minute
+    limit: -1
+    timeFrame: minute
+  - name: ScyllaDB Admin REST API
+    scope: ip
+    metric: requests_per_minute
+    limit: -1
+    timeFrame: minute

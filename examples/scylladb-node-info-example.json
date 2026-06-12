@@ -1,0 +1,17 @@
+{
+  "nodes": [
+    {
+      "azName": "us-east-1a",
+      "azId": 1,
+      "rackName": "rack1",
+      "cloudProviderId": 0,
+      "instanceId": "i-0abc123def456",
+      "regionId": 1,
+      "dcId": 1,
+      "dns": "node1.scylladb.cloud",
+      "publicDns": "node1-public.scylladb.cloud",
+      "privateIp": "10.0.1.10",
+      "status": "ACTIVE"
+    }
+  ]
+}

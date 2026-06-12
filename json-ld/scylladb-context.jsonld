@@ -1,0 +1,128 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "scylladb": "https://www.scylladb.com/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+
+    "Cluster": "scylladb:Cluster",
+    "Datacenter": "scylladb:Datacenter",
+    "Node": "scylladb:Node",
+    "FirewallRule": "scylladb:FirewallRule",
+    "VpcPeering": "scylladb:VpcPeering",
+    "ClusterRequest": "scylladb:ClusterRequest",
+    "VectorSearch": "scylladb:VectorSearch",
+    "Account": "scylladb:Account",
+    "CloudAccount": "scylladb:CloudAccount",
+    "Region": "scylladb:Region",
+    "AvailabilityZone": "scylladb:AvailabilityZone",
+
+    "id": "@id",
+    "type": "@type",
+
+    "clusterId": {
+      "@id": "scylladb:clusterId",
+      "@type": "xsd:integer"
+    },
+    "clusterName": {
+      "@id": "scylladb:clusterName",
+      "@type": "xsd:string"
+    },
+    "accountId": {
+      "@id": "scylladb:accountId",
+      "@type": "xsd:integer"
+    },
+    "scalingMode": {
+      "@id": "scylladb:scalingMode",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "scylladb:status",
+      "@type": "xsd:string"
+    },
+    "cloudProviderId": {
+      "@id": "scylladb:cloudProviderId",
+      "@type": "xsd:integer"
+    },
+    "regionId": {
+      "@id": "scylladb:regionId",
+      "@type": "xsd:integer"
+    },
+    "dcId": {
+      "@id": "scylladb:dcId",
+      "@type": "xsd:integer"
+    },
+    "encryptionAtRest": {
+      "@id": "scylladb:encryptionAtRest",
+      "@type": "xsd:boolean"
+    },
+    "userApiInterface": {
+      "@id": "scylladb:userApiInterface",
+      "@type": "xsd:string"
+    },
+    "scyllaVersion": {
+      "@id": "scylladb:scyllaVersion",
+      "@type": "xsd:string"
+    },
+    "nodeCount": {
+      "@id": "scylladb:nodeCount",
+      "@type": "xsd:integer"
+    },
+    "instanceType": {
+      "@id": "scylladb:instanceType",
+      "@type": "xsd:string"
+    },
+    "cidrBlock": {
+      "@id": "scylladb:cidrBlock",
+      "@type": "xsd:string"
+    },
+    "dns": {
+      "@id": "scylladb:dns",
+      "@type": "xsd:string"
+    },
+    "privateIp": {
+      "@id": "scylladb:privateIp",
+      "@type": "xsd:string"
+    },
+    "publicDns": {
+      "@id": "scylladb:publicDns",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "scylladb:address",
+      "@type": "xsd:string"
+    },
+    "nodes": {
+      "@id": "scylladb:hasNode",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "dcs": {
+      "@id": "scylladb:hasDatacenter",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "clusters": {
+      "@id": "scylladb:hasClusters",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "maintenanceWindow": {
+      "@id": "scylladb:maintenanceWindow",
+      "@type": "@id"
+    },
+    "vectorSearch": {
+      "@id": "scylladb:vectorSearch",
+      "@type": "@id"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

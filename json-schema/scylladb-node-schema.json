@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.cloud.scylladb.com/schemas/node-info.json",
+  "title": "NodeInfo",
+  "description": "Represents an individual node in a ScyllaDB Cloud cluster.",
+  "type": "object",
+  "properties": {
+    "azName": {
+      "type": "string",
+      "description": "Name of the availability zone"
+    },
+    "azId": {
+      "type": "string",
+      "description": "ID of the availability zone"
+    },
+    "rackName": {
+      "type": "string",
+      "description": "Name of the rack"
+    },
+    "billingStartDate": {
+      "type": "string",
+      "description": "Starting date for the billing"
+    },
+    "cloudProviderId": {
+      "type": "integer",
+      "description": "ID of the cloud provider (full list [get] /deployment/cloud-providers)"
+    },
+    "instanceId": {
+      "type": "integer",
+      "description": "ID of the instance type"
+    },
+    "regionId": {
+      "type": "integer",
+      "description": "ID of the cloud provider region (full list [get] /deployment/cloud-providers/{}/regions)"
+    },
+    "dcId": {
+      "type": "integer",
+      "description": "ID of the datacenter"
+    },
+    "clusterJoinDate": {
+      "type": "string",
+      "description": "Date when server joined the cluster"
+    },
+    "dns": {
+      "type": "string",
+      "description": "Server's DNS name"
+    },
+    "id": {
+      "type": "integer",
+      "description": "ID of the node"
+    },
+    "state": {
+      "type": "string",
+      "description": "Status of the node",
+      "enum": [
+        "NORMAL",
+        "JOINING",
+        "LEAVING",
+        "DECOMMISSIONED",
+        "MOVING",
+        "REMOVED"
+      ]
+    },
+    "privateIp": {
+      "type": "string",
+      "description": "Private IP of the node"
+    },
+    "publicIp": {
+      "type": "string",
+      "description": "Public IP of the node"
+    },
+    "serviceId": {
+      "description": "Deprecated",
+      "type": "integer",
+      "deprecated": true
+    },
+    "serviceVersionId": {
+      "description": "Deprecated",
+      "type": "integer",
+      "deprecated": true
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the node",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "PENDING_DELETE",
+        "DELETED",
+        "QUEUED"
+      ]
+    }
+  },
+  "required": []
+}

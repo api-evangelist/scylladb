@@ -46,6 +46,22 @@ apis:
         url: https://cloud.docs.scylladb.com/stable/api-docs/
       - type: OpenAPI
         url: https://api.cloud.scylladb.com/api-docs.json
+      - type: OpenAPI
+        url: openapi/scylladb-cloud-management-api-openapi.yml
+      - type: JSONSchema
+        url: json-schema/scylladb-cluster-schema.json
+      - type: JSONSchema
+        url: json-schema/scylladb-node-schema.json
+      - type: JSONSchema
+        url: json-schema/scylladb-firewall-rule-schema.json
+      - type: Example
+        url: examples/scylladb-list-clusters-example.json
+      - type: Example
+        url: examples/scylladb-create-cluster-example.json
+      - type: Example
+        url: examples/scylladb-node-info-example.json
+      - type: Example
+        url: examples/scylladb-firewall-rules-example.json
   - aid: scylladb:admin-rest-api
     name: ScyllaDB Admin REST API
     description: >-
@@ -89,6 +105,12 @@ common:
     url: https://forum.scylladb.com/
   - type: University
     url: https://university.scylladb.com/
+  - type: Vocabulary
+    url: vocabulary/scylladb-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/scylladb-context.jsonld
+  - type: Blogs
+    url: blogs/blogs.json
   - type: Plans
     url: plans/scylladb-plans-pricing.yml
   - type: RateLimits

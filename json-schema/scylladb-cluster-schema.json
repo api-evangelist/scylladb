@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.cloud.scylladb.com/schemas/cluster-info.json",
+  "title": "ClusterInfo",
+  "description": "Represents a ScyllaDB Cloud cluster with its metadata and status.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "ID of the cluster"
+    },
+    "accountId": {
+      "type": "integer",
+      "description": "ID of the account where cluster belongs to"
+    },
+    "clusterName": {
+      "type": "string",
+      "description": "Name of the cluster"
+    },
+    "scalingMode": {
+      "type": "object",
+      "description": "Scaling mode of the cluster.",
+      "properties": {
+        "mode": {
+          "$ref": "#/components/schemas/ScalingMode"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the cluster",
+      "enum": [
+        "ACTIVE",
+        "QUEUED",
+        "BOOTSTRAPPING",
+        "BOOTSTRAP_ERROR",
+        "INACTIVE",
+        "PENDING_DELETE",
+        "DELETED"
+      ]
+    },
+    "cloudProviderId": {
+      "type": "integer",
+      "description": "ID of the cloud provider (full list [get] /deployment/cloud-providers)"
+    },
+    "encryptionAtRest": {
+      "$ref": "#/components/schemas/EncryptionAtRest",
+      "description": "Encryption at rest info for this cluster\nSpecifies the key id and provider\nEmpty if the cluster does not use the encryption-at-rest feature"
+    },
+    "encryptionMode": {
+      "description": "Defines how the client can connect to the cluster using CQL.",
+      "type": "string"
+    },
+    "encryptionCertificateMode": {
+      "description": "EncryptionCertificateMode when client connection is encrypted this property indicates if Cluster CA was signed with Account CA",
+      "type": "string"
+    },
+    "userApiInterface": {
+      "type": "string",
+      "description": "CQL or ALTERNATOR (DynamoDB)",
+      "enum": [
+        "CQL",
+        "ALTERNATOR"
+      ]
+    },
+    "deals": {
+      "type": "array",
+      "description": "deals in use of the cluster",
+      "items": {
+        "$ref": "#/components/schemas/DealsInUse"
+      }
+    },
+    "isLocked": {
+      "type": "boolean",
+      "description": "Indicates whether the cluster is currently locked due to an ongoing operation"
+    },
+    "pricingModel": {
+      "type": "integer",
+      "description": "Defines the pricing model"
+    },
+    "maxAllowedCIDRRange": {
+      "type": "integer",
+      "description": "Max CIDR range the user is allowed to specify on allowed ips rules, 0 disable all limitations."
+    },
+    "dns": {
+      "type": "boolean",
+      "description": "DNS enabled flag"
+    },
+    "dcCount": {
+      "type": "integer",
+      "description": "Number of Data Centers"
+    },
+    "dc": {
+      "$ref": "#/components/schemas/ClusterDCInfo"
+    },
+    "provisioning": {
+      "$ref": "#/components/schemas/ProvisionType"
+    },
+    "alternatorWriteIsolation": {
+      "type": "string",
+      "description": "Write isolation for ALTERNATOR",
+      "enum": [
+        "",
+        "forbid",
+        "only_rmw_uses_lwt",
+        "always"
+      ]
+    },
+    "expiresAt": {
+      "type": "string"
+    },
+    "progress": {
+      "$ref": "#/components/schemas/ClusterRequestProgress"
+    },
+    "accountCloudProviderCredentialsId": {
+      "type": "integer",
+      "description": "ID of the account credentials"
+    },
+    "requestError": {
+      "type": "string",
+      "description": "Descriptive information about the potential error"
+    },
+    "scyllaVersion": {
+      "$ref": "#/components/schemas/scyllaVersion"
+    }
+  },
+  "required": [
+    "id",
+    "accountId",
+    "clusterName",
+    "status",
+    "cloudProviderId",
+    "scyllaVersion"
+  ]
+}

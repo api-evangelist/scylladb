@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.cloud.scylladb.com/schemas/firewall-rule.json",
+  "title": "FirewallRule",
+  "description": "Represents a firewall rule (CIDR allowlist entry) for a ScyllaDB Cloud cluster.",
+  "type": "object",
+  "properties": {
+    "clusterId": {
+      "type": "integer",
+      "description": "ID of the cluster"
+    },
+    "id": {
+      "type": "integer",
+      "description": "ID of the firewall allowed rule"
+    },
+    "address": {
+      "type": "string",
+      "description": "CIDR notation",
+      "example": "192.0.2.0/24"
+    }
+  },
+  "required": []
+}

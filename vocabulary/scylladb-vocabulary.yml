@@ -1,0 +1,82 @@
+vocab:
+  title: ScyllaDB Vocabulary
+  description: >-
+    Key terms and concepts used across the ScyllaDB Cloud Management API and
+    ScyllaDB Admin REST API.
+  source: https://cloud.docs.scylladb.com/stable/api-docs/
+  terms:
+    - term: cluster
+      definition: >-
+        A set of ScyllaDB nodes organized as a distributed database deployment.
+        Managed via the ScyllaDB Cloud API; identified by a numeric clusterId.
+    - term: datacenter
+      definition: >-
+        A logical grouping of nodes within a cluster, typically corresponding to
+        a cloud provider region. Referred to as "dc" in API paths.
+    - term: node
+      definition: >-
+        An individual ScyllaDB database instance within a datacenter. Nodes are
+        the fundamental unit of capacity and replication.
+    - term: accountId
+      definition: >-
+        Numeric identifier for a ScyllaDB Cloud account. Required as a path
+        parameter in most API endpoints.
+    - term: cloudProviderId
+      definition: >-
+        Numeric identifier for the underlying cloud provider (0 = AWS, 1 = GCP).
+    - term: scalingMode
+      definition: >-
+        Determines how cluster capacity is managed. Values: STANDARD (manual
+        node count) or XCLOUD (auto-scaling).
+    - term: encryptionAtRest
+      definition: >-
+        Boolean flag indicating whether data stored on cluster nodes is
+        encrypted at rest using provider-managed keys.
+    - term: userApiInterface
+      definition: >-
+        The client protocol interface exposed by the cluster. Values: CASSANDRA
+        (CQL) or ALTERNATOR (DynamoDB-compatible).
+    - term: firewallRule
+      definition: >-
+        An IP CIDR block entry in the cluster allowlist that permits network
+        access to the cluster's CQL or Alternator port.
+    - term: vpcPeering
+      definition: >-
+        A network connection between the ScyllaDB Cloud VPC and a customer VPC
+        on the same cloud provider, enabling private connectivity.
+    - term: clusterRequest
+      definition: >-
+        An asynchronous operation record tracking the progress of a long-running
+        cluster action such as create, resize, or delete.
+    - term: vectorSearch
+      definition: >-
+        Optional capability add-on nodes attached to a cluster that provide
+        approximate nearest-neighbor (ANN) vector similarity search.
+    - term: maintenanceWindow
+      definition: >-
+        A scheduled time window during which ScyllaDB Cloud may apply automatic
+        maintenance updates to a cluster.
+    - term: scyllaVersion
+      definition: >-
+        The ScyllaDB software version running on cluster nodes, expressed as a
+        semantic version string (e.g., "5.4.0").
+    - term: instanceType
+      definition: >-
+        The cloud provider VM instance type used for cluster nodes (e.g.,
+        i3.xlarge on AWS).
+    - term: cidrBlock
+      definition: >-
+        An IPv4 CIDR notation network range (e.g., "10.0.0.0/16") used for VPC
+        configuration or firewall allowlist rules.
+    - term: bearerToken
+      definition: >-
+        A ScyllaDB Cloud personal access token passed in the Authorization HTTP
+        header as "Bearer <token>" to authenticate API requests.
+    - term: status
+      definition: >-
+        Lifecycle state of a cluster or async request. Common values include
+        ACTIVE, CREATING, DELETING, FAILED, QUEUED, IN_PROGRESS, COMPLETED.
+    - term: regionId
+      definition: >-
+        Numeric identifier for a cloud provider region where the cluster or
+        datacenter is deployed.

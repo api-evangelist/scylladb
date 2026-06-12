@@ -1,0 +1,12 @@
+{
+  "clusterName": "my-new-cluster",
+  "cloudProviderId": 0,
+  "regionId": 1,
+  "nodeCount": 3,
+  "nodeType": "i3.xlarge",
+  "scyllaVersion": "5.4.0",
+  "cidrBlock": "172.31.0.0/16",
+  "userName": "scylla",
+  "userPassword": "superSecretPass123",
+  "encryptionAtRest": false
+}

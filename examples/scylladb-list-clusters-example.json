@@ -1,0 +1,15 @@
+{
+  "clusters": [
+    {
+      "id": 12345,
+      "accountId": 67890,
+      "clusterName": "production-cluster",
+      "scalingMode": "STANDARD",
+      "status": "ACTIVE",
+      "cloudProviderId": 0,
+      "encryptionAtRest": false,
+      "encryptionMode": "NONE",
+      "userApiInterface": "CASSANDRA"
+    }
+  ]
+}

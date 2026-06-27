@@ -54,13 +54,13 @@ apis:
         url: json-schema/scylladb-node-schema.json
       - type: JSONSchema
         url: json-schema/scylladb-firewall-rule-schema.json
-      - type: Example
+      - type: Examples
         url: examples/scylladb-list-clusters-example.json
-      - type: Example
+      - type: Examples
         url: examples/scylladb-create-cluster-example.json
-      - type: Example
+      - type: Examples
         url: examples/scylladb-node-info-example.json
-      - type: Example
+      - type: Examples
         url: examples/scylladb-firewall-rules-example.json
   - aid: scylladb:admin-rest-api
     name: ScyllaDB Admin REST API
@@ -101,7 +101,7 @@ common:
     url: https://status.cloud.scylladb.com/
   - type: ReleaseNotes
     url: https://www.scylladb.com/product/release-notes/
-  - type: Forum
+  - type: Forums
     url: https://forum.scylladb.com/
   - type: University
     url: https://university.scylladb.com/
@@ -109,7 +109,7 @@ common:
     url: vocabulary/scylladb-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/scylladb-context.jsonld
-  - type: Blogs
+  - type: Blog
     url: blogs/blogs.json
   - type: Plans
     url: plans/scylladb-plans-pricing.yml

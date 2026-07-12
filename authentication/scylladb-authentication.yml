@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/scylladb-cloud-management-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: Authorization
+  type: http
+  scheme: bearer
+  description: |-
+    Authorization header, required in all authenticated requests.
+
+    Header format: **Authorization: Bearer <token>**
+  sources:
+  - openapi/scylladb-cloud-management-api-openapi.yml

@@ -81,6 +81,12 @@ apis:
       - type: Documentation
         url: https://docs.scylladb.com/stable/operating-scylla/rest.html
 common:
+  - type: TrustCenter
+    url: security/scylladb-trust-center.yml
+  - type: DomainSecurity
+    url: security/scylladb-domain-security.yml
+  - type: Authentication
+    url: authentication/scylladb-authentication.yml
   - type: Website
     url: https://www.scylladb.com/
   - type: Documentation

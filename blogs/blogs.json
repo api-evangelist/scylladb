@@ -2,13 +2,14 @@
   "repo": "scylladb",
   "feeds": [
     {
-      "source": "https://resources.scylladb.com/blog",
-      "feed_url": "",
-      "saved": 2,
-      "method": "agent-scrape"
+      "source": "https://x.com/ScyllaDB",
+      "feed_url": "https://x.com/ScyllaDB",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 3,
-  "fetched": "2026-06-27T13:08:49Z",
-  "agent_pulled": "2026-06-27"
+  "fetched": "2026-07-11T11:50:51Z",
+  "note": "resource center is JS-rendered; post dates not extractable this run"
 }

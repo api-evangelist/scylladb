@@ -12,7 +12,20 @@ description: >-
   configuration. The platform supports vector search, multi-region active-active
   replication, and a Kubernetes operator for self-managed deployments.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/scylladb.png
 tags:
   - Database
   - NoSQL
@@ -27,60 +40,236 @@ created: '2026-06-12'
 modified: '2026-06-12'
 specificationVersion: '0.19'
 apis:
-  - aid: scylladb:cloud-management-api
-    name: ScyllaDB Cloud Management API
-    description: >-
-      REST API for programmatic access to ScyllaDB Cloud, enabling automation
-      of cluster provisioning, resizing, deletion, VPC peering, firewall rules,
-      datacenter management, vector search nodes, and account configuration.
-      Authenticated via personal access tokens.
-    humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
-    baseURL: https://api.cloud.scylladb.com
-    tags:
-      - Cloud Management
-      - Cluster Operations
-      - Database
-      - NoSQL
-    properties:
-      - type: Documentation
-        url: https://cloud.docs.scylladb.com/stable/api-docs/
-      - type: OpenAPI
-        url: https://api.cloud.scylladb.com/api-docs.json
-      - type: OpenAPI
-        url: openapi/scylladb-cloud-management-api-openapi.yml
-      - type: JSONSchema
-        url: json-schema/scylladb-cluster-schema.json
-      - type: JSONSchema
-        url: json-schema/scylladb-node-schema.json
-      - type: JSONSchema
-        url: json-schema/scylladb-firewall-rule-schema.json
-      - type: Examples
-        url: examples/scylladb-list-clusters-example.json
-      - type: Examples
-        url: examples/scylladb-create-cluster-example.json
-      - type: Examples
-        url: examples/scylladb-node-info-example.json
-      - type: Examples
-        url: examples/scylladb-firewall-rules-example.json
-  - aid: scylladb:admin-rest-api
-    name: ScyllaDB Admin REST API
-    description: >-
-      Node-level administrative REST API exposing endpoints to check and update
-      configuration, retrieve cluster-level and node-level information, and
-      execute administrative operations. Exposed locally on port 10000 with
-      a Swagger 2.0 definition available at /v2 and an interactive Swagger UI
-      at /ui.
-    humanURL: https://docs.scylladb.com/stable/operating-scylla/rest.html
-    baseURL: http://localhost:10000
-    tags:
-      - Administration
-      - Database
-      - NoSQL
-      - Operations
-    properties:
-      - type: Documentation
-        url: https://docs.scylladb.com/stable/operating-scylla/rest.html
+- aid: scylladb:admin-rest-api
+  name: ScyllaDB Admin REST API
+  description: >-
+    Node-level administrative REST API exposing endpoints to check and update configuration, retrieve
+    cluster-level and node-level information, and execute administrative operations. Exposed locally on
+    port 10000 with a Swagger 2.0 definition available at /v2 and an interactive Swagger UI at /ui.
+  humanURL: https://docs.scylladb.com/stable/operating-scylla/rest.html
+  baseURL: http://localhost:10000
+  tags:
+  - Administration
+  - Database
+  - NoSQL
+  - Operations
+  properties:
+  - type: Documentation
+    url: https://docs.scylladb.com/stable/operating-scylla/rest.html
+- aid: scylladb:scylladb-account-api
+  name: ScyllaDB Account API
+  description: The Account API from ScyllaDB — 5 operation(s) for account.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-account-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
+- aid: scylladb:scylladb-account-cluster-network-api
+  name: ScyllaDB Account Cluster Network API
+  description: >-
+    The Account Cluster Network API from ScyllaDB — 4 operation(s) for account cluster network.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - Account Cluster Network
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-account-cluster-network-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
+- aid: scylladb:scylladb-account-network-cluster-connection-api
+  name: ScyllaDB Account network cluster connection API
+  description: >-
+    The Account network cluster connection API from ScyllaDB — 2 operation(s) for account network cluster
+    connection.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - Account network cluster connection
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-account-network-cluster-connection-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
+- aid: scylladb:scylladb-cluster-api
+  name: ScyllaDB Cluster API
+  description: The Cluster API from ScyllaDB — 10 operation(s) for cluster.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - Cluster
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-cluster-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
+- aid: scylladb:scylladb-cluster-request-api
+  name: ScyllaDB Cluster Request API
+  description: The Cluster Request API from ScyllaDB — 2 operation(s) for cluster request.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - Cluster Request
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-cluster-request-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
+- aid: scylladb:scylladb-deployment-api
+  name: ScyllaDB Deployment API
+  description: The Deployment API from ScyllaDB — 4 operation(s) for deployment.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - Deployment
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-deployment-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
+- aid: scylladb:scylladb-pricing-api
+  name: ScyllaDB Pricing API
+  description: The Pricing API from ScyllaDB — 1 operation(s) for pricing.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - Pricing
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-pricing-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
+- aid: scylladb:scylladb-vectorsearch-api
+  name: ScyllaDB VectorSearch API
+  description: The VectorSearch API from ScyllaDB — 1 operation(s) for vectorsearch.
+  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
+  baseURL: https://api.cloud.scylladb.com
+  tags:
+  - VectorSearch
+  properties:
+  - type: OpenAPI
+    url: openapi/scylladb-vectorsearch-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.docs.scylladb.com/stable/api-docs/
+  - type: JSONSchema
+    url: json-schema/scylladb-cluster-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-node-schema.json
+  - type: JSONSchema
+    url: json-schema/scylladb-firewall-rule-schema.json
+  - type: Examples
+    url: examples/scylladb-list-clusters-example.json
+  - type: Examples
+    url: examples/scylladb-create-cluster-example.json
+  - type: Examples
+    url: examples/scylladb-node-info-example.json
+  - type: Examples
+    url: examples/scylladb-firewall-rules-example.json
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/scylladb/overview
   - type: AgenticAccess
     url: agentic-access/scylladb-agentic-access.yml
   - type: TrustCenter

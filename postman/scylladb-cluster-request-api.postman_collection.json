@@ -1,0 +1,725 @@
+{
+  "info": {
+    "_postman_id": "21a316da-afa5-449f-89bc-1064bb4957a7",
+    "name": "ScyllaDB Cloud Account Cluster Request API",
+    "description": "### Error codes mapping\n\t000001\tToo many requests sent from your IP address. Please try again in a minute.\n\t000002\tYou do not have the required permissions to perform this action\n\t010101\tError retrieving default account\n\t010201\tError retrieving account info\n\t010301\tError retrieving countries\n\t010401\tInvalid request format\n\t010402\tYou are not allowed to change to this country. Please contact support\n\t010403\tError setting account country\n\t010501\tError getting account active credentials\n\t010601\tError sending cross account request\n\t010701\tError getting permissions\n\t010801\tInvalid \"type\" query parameter\n\t010802\tInvalid \"status\" query parameter\n\t010803\tAccount ID is missing\n\t010804\tInvalid request payload\n\t010805\tError setting notifications email\n\t010806\tProvided email is invalid\n\t010807\tAccount ID is missing\n\t010808\tError getting notifications email\n\t011001\tInvalid query parameter\n\t011002\tInvalid end/start query parameter, end after start\n\t011003\tInvalid end/start query parameter, minimum 30 minutes timespan\n\t011004\tUnexpected error occurred when account usage. Please contact support \n\t011100\tAccount has associated cluster resources\n\t020001\tUnauthorized\n\t020002\tAuthentication error\n\t020005\tOnly Bearer authorization token is supported\n\t020006\tAuthentication denied\n\t020101\tInvalid request format\n\t020102\tUnexpected error occurred when creating a user. Please contact support\n\t020104\tRegistration is restricted\n\t020201\tError creating user\n\t020202\tError verifying user\n\t020301\tInvalid request format\n\t020302\tUnexpected error occurred when login. Please contact support\n\t020303\tPlease check your email and complete your registration\n\t020304\tEmail or password is incorrect, please try again\n\t020305\tToo many failed login attempts, please try again in a few minutes\n\t020306\tYour password has expired. Please check your email for instructions\n\t020401\tInvalid request\n\t020402\tUnexpected error occurred when logout\n\t020501\tError retrieving user information\n\t020601\tInvalid request format\n\t020602\tUnexpected error occurred when reset password. Please contact support\n\t020701\tInvalid request format\n\t020702\tUnexpected error occurred when reset password. Please contact support\n\t020801\tInvalid request format\n\t020802\tUnexpected error occurred when reset password. Please contact support\n\t020803\tPassword was already used\n\t020901\tInvalid request format\n\t020902\tUnexpected error occurred when changing password. Please contact support\n\t020903\tCurrent password is incorrect\n\t020904\tTo help protect your account, please choose a password that you haven't used before\n\t020905\tNew password is incorrect\n\t021001\tInvalid request format\n\t021002\tError resending token\n\t021003\tUser already verified\n\t021101\tInvalid request format\n\t021102\tSession token is invalid or expired\n\t021201\tInvalid request format\n\t021202\tError updating user details\n\t021301\tInvalid request format\n\t021302\tError creating TOTP password\n\t021303\tInvalid user password\n\t021304\tUser already has MFA enabled\n\t021401\tInvalid request format\n\t021402\tError validating TOTP password\n\t021403\tUser already has MFA enabled\n\t021404\tInvalid TOTP UUID\n\t021405\tTOTP verification time expired\n\t021406\tInvalid user TOTP status\n\t021407\tInvalid user passcode\n\t021501\tInvalid request format\n\t021502\tGeneral error TOTP login\n\t021503\tUser should have MFA enabled\n\t021504\tInvalid session token\n\t021505\tInvalid session token status\n\t021506\tSession token expired\n\t021507\tInvalid user TOTP status\n\t021508\tInvalid user passcode\n\t021601\tInvalid request format\n\t021602\tDisable user TOTP general error\n\t021603\tInvalid user password\n\t021604\tUser should have MFA enabled\n\t021701\tInvalid request format\n\t021702\tValidate and disable user TOTP general error\n\t021703\tInvalid user password\n\t021704\tInvalid user TOTP status\n\t021705\tInvalid user passcode\n\t021801\tError creating monitor token\n\t021901\tInvalid request format\n\t021902\tError validating monitor token\n\t021903\tInvalid monitor token\n\t021904\tUser status is not Active\n\t021905\tUser ID mismatch\n\t022001\tUser is not found\n\t030101\tInvalid request format\n\t030102\tError adding billing card\n\t030201\tError retrieving billing info\n\t030202\tError adding account billing info\n\t030301\tError getting account billing info\n\t030401\tError getting billing card info\n\t040101\tInvalid request format\n\t040102\tError adding a new firewall rule\n\t040103\tThe firewall rule already exists\n\t040104\tInvalid firewall rule\n\t040105\tAllowed IPs range is too big. CIDR range suffix must be at least /16\n\t040201\tUnexpected error occurred when retrieving credentials. Please contact support.\n\t040301\tGeneral error with retrieving the allowed firewall list\n\t040401\tGeneral error with retrieving the nodes list\n\t040501\tInvalid request format\n\t040502\tGeneral error with retrieving the cluster extended info\n\t040601\tGeneral error with retrieving the clusters list\n\t040701\tInvalid request format\n\t040702\tUnexpected error occurred when creating a cluster. Please contact support\n\t040703\tA cluster with this name already exists, please use another name\n\t040704\tProvided cluster network range is too small\n\t040705\tProvided cluster network does not belong to a private network\n\t040706\tProvided cluster network range is too big\n\t040707\tAccount is not eligible for free-tier\n\t040708\tInvalid number of nodes for free tier cluster\n\t040709\tInstance type not eligible for free tier cluster\n\t040710\tInvalid billing status\n\t040711\tGiven service version requires AlternatorWriteIsolation\n\t040712\tProvided cluster name should be 2-63 characters, start and end with an alphanumeric character\n\t040713\tProvided cluster network CIDR block is reserved and cannot be used. Please use a different CIDR block\n\t040714\tAllowed IPs range is too big. CIDR range suffix must be at least /16\n\t040715\tAccount cloud provider is not supported for deferred billing info\n\t040716\tAccount is not active\n\t040717\tAccount is not eligible for deferred billing info since billing is verified\n\t040718\tAccount is not eligible for deferred billing since there is no active cloud account\n\t040719\tDeferred billing period has been already initiated for this account\n\t040720\tThe period allowing no billing information is expired\n\t040722\tAccount billing is not verified\n\t040723\tAccount does not have encryption at rest enabled\n\t040724\tGeneral error related to key service\n\t040725\tInvalid request's expiration format\n\t040726\tToo many maintenance windows\n\t040727\tMaintenance window schedule rule format is invalid\n\t040728\tMaintenance window schedule rule is invalid\n\t040729\tMaintenance window duration is too short\n\t040730\tMaintenance window time is out of working hours\n\t040731\tMaintenance windows overlap with each other\n\t040732\tNot enough maintenance windows\n\t040733\tInvalid encryption at rest parameter\n\t040734\tThe selected tablets mode is not supported for X-Cloud\n\t040735\tThe specified ScyllaDB version is not compatible with X-Cloud\n\t040736\tSetting Nodes or CloudProviderInstanceType is not allowed for clusters with X-Cloud scaling enabled\n\t040737\tClusters with X-Cloud scaling must specify exactly one: either valid InstanceFamilies or valid InstanceTypeIDs\n\t040738\tX-Cloud scaling is not available for free tier clusters\n\t040739\tOne of the scaling policy fields is not valid\n\t040740\tInvalid scaling mode\n\t040741\tAlternator is not supported when tablets are enabled\n\t040742\tInvalid vector search configuration\n\t040743\tOnly one vector search instance is allowed per availability zone\n\t040744\tVector search is already installed\n\t040745\tVector search is not supported on this cluster\n\t040746\tInvalid instance type for vector search\n\t040747\tMutually exclusive parameters provided for vector search\n\t040748\tToo many vector search nodes specified for the datacenter\n\t040749\tInvalid cloud account configuration\n\t040751\tThe specified instance type is not eligible for free tier clusters with vector search\n\t040752\tThe specified number of vector-search nodes is not eligible for free tier clusters\n\t040753\tMinimum number of zones required for placement mode not met\n\t040754\tThis region is temporarily unavailable for new clusters. Please select a different region.\n\t040801\tInvalid request format\n\t040802\tUnexpected error occurred when deleting a cluster. Please contact support\n\t040803\tCluster name is invalid\n\t040901\tError deleting the firewall allowed ip\n\t040902\tInvalid firewall rule\n\t041001\tInvalid request format\n\t041002\tUnexpected error occurred when resizing a cluster. Please contact support\n\t041003\tCluster DC must be active to resize the cluster\n\t041004\tFeature is not enabled on cluster\n\t041005\tResizing by this number of nodes is not permitted. Please contact support for assistance\n\t041006\tActive resize request exists\n\t041007\tNode count is not multiplication of Replication Factor\n\t041008\tClusters with X-Cloud scaling cannot be resized\n\t041009\tInvalid instance type\n\t041101\tInvalid request format\n\t041102\tThe CIDR block address provided is already in use. It overlaps either with the target VPC or with an already established VPC peering connection\n\t041103\tThis VPC is already peered\n\t041104\tThe cluster does not have VPC peering enabled\n\t041105\tThe VPC ID you provided is invalid\n\t041106\tThe AWS Account ID you provided is invalid\n\t041107\tCluster has no VPC\n\t041108\tCluster has multiple VPC\n\t041109\tThe provided Cluster network CIDR block is reserved and cannot be used. Please use a different CIDR block\n\t041111\tGeneral error creating VPC peering connection\n\t041112\tInvalid firewall rule\n\t041113\tCIDR range is too big, the prefix must be at least /16\n\t041114\tInvalid request parameter\n\t041115\tMissing peer region ID\n\t041116\tInvalid request format\n\t041117\tGeneral cloud API error\n\t041118\tOperation is not allowed\n\t041120\tUnexpected error occurred when listing VPC peering connections. Please contact support.\n\t041130\tUnexpected error occurred when deleting a VPC peering connection. Please contact support.\n\t041140\tGeneral error describing VPC peering connection\n\t041141\tVPC peering connection not found\n\t041142\tUnexpected error occurred when reading a VPC peering connection. Please contact support.\n\t041150\tUnexpected error occurred when retrieving cluster VPC list. Please contact support.\n\t041160\tGeneral error requesting prometheus proxy\n\t041170\tGeneral error getting prometheus proxy tokens\n\t041171\tPrometheus proxy tokens not found\n\t041180\tGeneral error disabling prometheus proxy\n\t041181\tPrometheus Proxy tokens not found\n\t041190\tGeneral error getting cluster requests\n\t041191\tInvalid \"type\" query parameter\n\t041192\tInvalid \"status\" query parameter\n\t041200\tGeneral error with retrieving cluster public certificate\n\t041201\tEncryption must be enabled to retrieve cluster public certificate\n\t041210\tGeneral error getting backup task history\n\t041300\tUnexpected error occurred when enabling DNS\n\t041301\tDNS support is already disabled on this cluster\n\t041302\tDNS support is already enabled on this cluster\n\t041303\tThere is another active DNS request in progress\n\t041400\tUnable to retrieve windows information\n\t041401\tUnable to retrieve cluster windows list\n\t041402\tBad request format, rrule is missing in request body\n\t041403\tBad request format, invalid rrule format\n\t041404\tBad request format, duration needs to be >= 0\n\t041405\tProvided windows overlaps with other windows\n\t041406\tWindow outside of working hours\n\t041407\tCan't delete more windows, minimum required windows reached\n\t041408\tCan't create more windows, maximum allowed number reached\n\t041409\tUnable to create maintenance window\n\t041410\tUnable to update the maintenance window\n\t041411\tUnable to delete maintenance window\n\t041412\tWindow outside of working hours\n\t041413\tUnable to return default maintenance windows\n\t041500\tUnable to change encryption mode\n\t041601\tInvalid query parameter\n\t041602\tInvalid end/start query parameter, end after start\n\t041603\tInvalid end/start query parameter, minimum 30 minutes timespan\n\t041604\tUnexpected error occurred when cluster usage. Please contact support \n\t041700\tInvalid input\n\t041702\tInvalid input\n\t041704\tCluster does not have a node reboot feature enabled\n\t041705\tCluster node doesn't exist\n\t041706\tCluster node is not in active state\n\t041707\tCluster is locked\n\t041708\tCluster has actions queued for processing\n\t041709\t'force' must be 'true' or 'false'\n\t041710\t'duration' must be in range 0..900\n\t0420001\tGeneral error getting datacenter list\n\t0420002\tGeneral error getting datacenter info\n\t0420003\tIll-formed datacenter ID\n\t0420004\tDatacenter not found\n\t0420005\tDatacenter does not belong to cluster\n\t0420006\tDatacenter is not active\n\t0420007\tGeneral error requesting to add data center\n\t0420008\tProvided CIDR block overlaps with another data center\n\t0420009\tProvided CIDR block overlaps with VPC peer\n\t0420010\tProvided CIDR range is too small\n\t0420011\tProvided CIDR does not belong to a private network\n\t0420012\tProvided CIDR does not belong to a private network\n\t0420014\tProvided CIDR block is reserved and cannot be used. Please use a different CIDR block\n\t0420015\tGeneral error creating datacenter rescale request\n\t0420017\tThe current and requested size are the same\n\t0420018\tFree tier clusters cannot be rescaled\n\t0420019\tDevelopment clusters cannot be rescaled\n\t0420020\tNode count must be a multiplication of RF\n\t0420021\tAccount billing is not verified\n\t0420022\tThis region is temporarily unavailable for adding new datacenters. Please select a different region.\n\t0430001\tInvalid query parameter\n\t0430002\tInvalid end/start query parameter, end after start\n\t0430003\tInvalid end/start query parameter, minimum 30 minutes timespan\n\t0430004\tUnexpected error occurred when cluster usage. Please contact support\n\t043001\tGeneral error updating cluster connection\n\t043002\tInvalid request format\n\t043003\tInvalid request format\n\t043005\tVPC peering not found\n\t043006\tProperty cidrlist is empty list\n\t043007\tProperty cidrlist can't have more than 5 entries\n\t043008\tProvided CIDRs overlaps reserved networks\n\t043009\tProvided CIDRs overlaps existing cluster datacenter CIDR\n\t043010\tIt is allowed to update only peering with status ACTIVE or INACTIVE\n\t043011\tProperty status validation failed, it can only be \"ACTIVE\",\"INACTIVE\"\n\t043012\tProperty status validation failed\n\t044001\tInvalid request format\n\t044002\tGeneral error renaming the cluster\n\t044003\tCluster must be active to rename the cluster\n\t044004\tCluster name must be in a valid format\n\t044005\tCluster name is already used\n\t046101\tInvalid vector search configuration\n\t046102\tVector search is already installed\n\t046103\tVector search is not supported on this cluster\n\t046104\tInvalid instance type for vector search\n\t046105\tOnly one vector search instance is allowed per availability zone\n\t046106\tAt least one node is required for vector search to operate\n\t046107\tToo many vector search nodes specified for the rack\n\t046108\tInvalid rack specified\n\t050101\tError running health checks\n\t060101\tGeneral error\n\t060102\tAgents need to use the ZenDesk portal\n\t070101\tError listing the cloud accounts\n\t070201\tError creating a new cloud account\n\t070203\tInvalid request format\n\t070204\tUnsupported CloudProviderID\n\t070301\tError deleting the cloud accounts\n\t070303\tThe cloud account is used by one or more cluster DC\n\t070401\tError updating the cloud account\n\t070403\tCloudRoleExternalID must match the existing value\n\t070404\tBoundaryPolicyARN field AccountID must match AWSAccountID\n\t070405\tCloudPolicyARN field AccountID must match AWSAccountID\n\t070406\tCloudRoleARN field AccountID must match AWSAccountID\n\t070407\tAWSAccountID must be a valid 12-digit account ID or be empty\n\t070408\tBoundaryPolicyARN must be a valid ARN or be empty\n\t070409\tBoundaryPolicyARN must be a policy\n\t070410\tCloudPolicyARN must be a valid ARN or be empty\n\t070411\tCloudPolicyARN must be a policy\n\t070412\tCloudRoleARN must be a valid ARN or be empty\n\t070413\tCloudRoleARN must be a role\n\t070414\tThe cloud account is used by one or more cluster DC\n\t070501\tError getting the AWS boundary IAM policy document\n\t070601\tError getting the AWS cloud IAM policy document\n\t070603\tInvalid request format\n\t070604\tCloud policy name must be between 1 and 64 characters, and use only word characters or symbols: +=,./@-\n\t070605\tUnsupported cloud provider\n\t070606\tThe boundary policy ARN is not set\n\t070607\tThe AWS account ID is not set\n\t070701\tError checking the cloud account policies\n\t070703\tThe cloud account properties are not complete\n\t070801\tError getting the cloud account clusters\n\t070901\tThe cloud account was not found\n\t070902\tThe cloud account is invalid\n\t070903\tFailed to parse query parameter\n\t080001\tAt least one of properties clusterVPCID or clusterDCID have to be specified\n\t080002\tInvalid request format\n\t080003\tFirewall rule already exist\n\t080004\tCan't find target VPC\n\t080005\tCan't find target VPC\n\t080006\tUnknown cluster connection type\n\t080007\tProperty cidrlist is empty list\n\t080008\tProvided CIDRs overlaps reserved networks\n\t080009\tProvided CIDRs overlaps existing cluster datacenter CIDR\n\t080010\tProperty data.ramARN validation failed\n\t080011\tProperty data.tgwID validation failed\n\t080012\tProperty data.customerVPCID validation failed\n\t080013\tProperty data.customerAccountID validation failed\n\t080014\tProperty data.customerNetworkID validation failed\n\t080015\tInvalid request format\n\t080016\tInvalid firewall rule\n\t080017\tCIDR range is too big, the prefix must be at least /16\n\t080018\tInvalid request parameter\n\t080019\tProperty name validation failed\n\t080020\tGeneral error creating cluster connections\n\t080021\tProperty cidrlist can't have more than 5 entries\n\t081001\tFailed to parse query parameter type\n\t081002\tFailed to parse query parameter cluster-id\n\t081003\tFailed to parse query parameter dc-id\n\t081004\tFailed to parse query parameter vpc-id\n\t081005\tGeneral error listing cluster connections\n\t082001\tFailed to parse connection\n\t082002\tCluster connection not found\n\t082003\tGeneral error getting cluster connection\n\t083001\tFailed to parse connection\n\t083002\tCluster connection not found\n\t083003\tGeneral error deleting cluster connection\n\t084001\tFailed to parse connection\n\t084002\tCluster connection not found\n\t084003\tProperty cidrlist is empty list\n\t084004\tProvided CIDRs overlaps reserved networks\n\t084005\tProvided CIDRs overlaps existing cluster datacenter CIDR\n\t084006\tProperty data.ramARN validation failed\n\t084007\tProperty data.tgwID validation failed\n\t084008\tProperty data.customerVPCID validation failed\n\t084009\tProperty data.customerAccountID validation failed\n\t084010\tProperty data.customerNetworkID validation failed\n\t084011\tProperty name validation failed\n\t084012\tProperty status validation failed\n\t084013\tInvalid request format\n\t084014\tInvalid request format\n\t084015\tGeneral error updating cluster connection\n\t084016\tProperty cidrlist can't have more than 5 entries\n\t084017\tCan't recreate deleted cluster connection\n\t084018\tCluster connection has wrong status\n\t085001\tFailed to parse connection\n\t085002\tCluster connection not found\n\t085003\tProperty cidrlist is empty list\n\t085004\tProvided CIDRs overlaps reserved networks\n\t085005\tProvided CIDRs overlaps existing cluster datacenter CIDR\n\t085006\tProperty data.ramARN validation failed\n\t085007\tProperty data.tgwID validation failed\n\t085008\tProperty data.customerVPCID validation failed\n\t085009\tProperty data.customerAccountID validation failed\n\t085010\tProperty data.customerNetworkID validation failed\n\t085011\tProperty name validation failed\n\t085012\tConnection has unexpected status\n\t085013\tInvalid request format\n\t085014\tInvalid request format\n\t085015\tGeneral error updating cluster connection\n\t085016\tProperty cidrlist can't have more than 5 entries\n\t090101\tinvalid target filter\n\tBILLING_TOKEN\tThere was an error submitting your billing information\n",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:51:52.000Z",
+    "updatedAt": "2026-07-28T02:51:53.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-21a316da-afa5-449f-89bc-1064bb4957a7"
+  },
+  "item": [
+    {
+      "name": "account",
+      "item": [
+        {
+          "name": "{accountId}",
+          "item": [
+            {
+              "name": "cluster",
+              "item": [
+                {
+                  "name": "{clusterId}",
+                  "item": [
+                    {
+                      "name": "request",
+                      "item": [
+                        {
+                          "name": "Get the list of cluster requests created in context of given account",
+                          "id": "cdddaa45-0e57-44f3-8ea2-35eb629bdcbd",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "traceparent",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/account/:accountId/cluster/:clusterId/request?type=CREATE_VPC_PEERING&status=FAILED",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "account",
+                                ":accountId",
+                                "cluster",
+                                ":clusterId",
+                                "request"
+                              ],
+                              "query": [
+                                {
+                                  "description": "type of request",
+                                  "key": "type",
+                                  "value": "CREATE_VPC_PEERING"
+                                },
+                                {
+                                  "description": "status of request",
+                                  "key": "status",
+                                  "value": "FAILED"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "6c82daa8-e1e1-42cb-8d0c-6be00508759c",
+                                  "key": "accountId",
+                                  "value": "<integer>",
+                                  "description": "(Required) Account ID"
+                                },
+                                {
+                                  "id": "10924337-bfcc-4aa0-a66d-2dbbec2cea83",
+                                  "key": "clusterId",
+                                  "value": "<integer>",
+                                  "description": "(Required) Cluster ID"
+                                }
+                              ]
+                            },
+                            "description": "Return the list of cluster requests created in the context of a given account."
+                          },
+                          "response": [
+                            {
+                              "id": "2585dd4e-86fb-4ebe-a0e8-d96221f69a57",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/:clusterId/request?type=CREATE_VPC_PEERING&status=FAILED",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    ":clusterId",
+                                    "request"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "type of request",
+                                      "key": "type",
+                                      "value": "CREATE_VPC_PEERING"
+                                    },
+                                    {
+                                      "description": "status of request",
+                                      "key": "status",
+                                      "value": "FAILED"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "clusterId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"error\": \"<string>\",\n  \"data\": [\n    {\n      \"accountId\": \"<integer>\",\n      \"clusterId\": \"<integer>\",\n      \"connectionID\": \"<integer>\",\n      \"id\": \"<integer>\",\n      \"progressDescription\": \"<string>\",\n      \"progressPercent\": \"<integer>\",\n      \"requestBody\": \"<string>\",\n      \"requestType\": \"SCALE_CLUSTER\",\n      \"status\": \"CANCELLED\",\n      \"ticketExternalID\": \"<string>\",\n      \"userFriendlyError\": \"<string>\",\n      \"userId\": \"<integer>\",\n      \"version\": \"<integer>\",\n      \"provisioning\": \"dedicated-vm\"\n    },\n    {\n      \"accountId\": \"<integer>\",\n      \"clusterId\": \"<integer>\",\n      \"connectionID\": \"<integer>\",\n      \"id\": \"<integer>\",\n      \"progressDescription\": \"<string>\",\n      \"progressPercent\": \"<integer>\",\n      \"requestBody\": \"<string>\",\n      \"requestType\": \"RESIZE_VECTOR_SEARCH\",\n      \"status\": \"CANCELLED\",\n      \"ticketExternalID\": \"<string>\",\n      \"userFriendlyError\": \"<string>\",\n      \"userId\": \"<integer>\",\n      \"version\": \"<integer>\",\n      \"provisioning\": \"dedicated-vm\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-2585dd4e-86fb-4ebe-a0e8-d96221f69a57"
+                            },
+                            {
+                              "id": "fc1f31b8-b885-4813-9fc0-0d5b27da078f",
+                              "name": "Bad Request",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/:clusterId/request?type=CREATE_VPC_PEERING&status=FAILED",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    ":clusterId",
+                                    "request"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "type of request",
+                                      "key": "type",
+                                      "value": "CREATE_VPC_PEERING"
+                                    },
+                                    {
+                                      "description": "status of request",
+                                      "key": "status",
+                                      "value": "FAILED"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "clusterId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<integer>",
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-fc1f31b8-b885-4813-9fc0-0d5b27da078f"
+                            },
+                            {
+                              "id": "191bde00-9029-4fc7-ba8a-b793d9136a48",
+                              "name": "Not Found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/:clusterId/request?type=CREATE_VPC_PEERING&status=FAILED",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    ":clusterId",
+                                    "request"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "type of request",
+                                      "key": "type",
+                                      "value": "CREATE_VPC_PEERING"
+                                    },
+                                    {
+                                      "description": "status of request",
+                                      "key": "status",
+                                      "value": "FAILED"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "clusterId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<integer>",
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-191bde00-9029-4fc7-ba8a-b793d9136a48"
+                            },
+                            {
+                              "id": "074b1977-2afd-4596-811e-87a839b2fbfe",
+                              "name": "Internal Server Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/:clusterId/request?type=CREATE_VPC_PEERING&status=FAILED",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    ":clusterId",
+                                    "request"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "type of request",
+                                      "key": "type",
+                                      "value": "CREATE_VPC_PEERING"
+                                    },
+                                    {
+                                      "description": "status of request",
+                                      "key": "status",
+                                      "value": "FAILED"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "clusterId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-074b1977-2afd-4596-811e-87a839b2fbfe"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:51:53.000Z",
+                          "updatedAt": "2026-07-28T02:51:53.000Z",
+                          "uid": "35240-cdddaa45-0e57-44f3-8ea2-35eb629bdcbd"
+                        }
+                      ],
+                      "id": "e71001a0-c6bf-455e-921f-848a44e6cded",
+                      "createdAt": "2026-07-28T02:51:53.000Z",
+                      "updatedAt": "2026-07-28T02:51:53.000Z",
+                      "uid": "35240-e71001a0-c6bf-455e-921f-848a44e6cded"
+                    }
+                  ],
+                  "id": "e34e8205-a884-4a48-ba05-2dea1d80dd3e",
+                  "createdAt": "2026-07-28T02:51:53.000Z",
+                  "updatedAt": "2026-07-28T02:51:53.000Z",
+                  "uid": "35240-e34e8205-a884-4a48-ba05-2dea1d80dd3e"
+                },
+                {
+                  "name": "request",
+                  "item": [
+                    {
+                      "name": "{requestId}",
+                      "item": [
+                        {
+                          "name": "Get the details about cluster request",
+                          "id": "e4a175e4-a223-4bad-bb25-fc31baf3f54f",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "traceparent",
+                                "value": "<string>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/account/:accountId/cluster/request/:requestId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "account",
+                                ":accountId",
+                                "cluster",
+                                "request",
+                                ":requestId"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "4c7ca8c8-e834-45c6-af2a-939b0a11fe4c",
+                                  "key": "accountId",
+                                  "value": "<integer>",
+                                  "description": "(Required) Account ID"
+                                },
+                                {
+                                  "id": "6321fd6c-155b-4243-9b58-e2d9900bb80c",
+                                  "key": "requestId",
+                                  "value": "<integer>",
+                                  "description": "(Required) RequestId"
+                                }
+                              ]
+                            },
+                            "description": "Return details about a particular cluster request."
+                          },
+                          "response": [
+                            {
+                              "id": "51802e4d-24d5-4fe4-ab75-115a100938c2",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/request/:requestId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    "request",
+                                    ":requestId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "requestId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"error\": \"<string>\",\n  \"data\": {\n    \"accountId\": \"<integer>\",\n    \"clusterId\": \"<integer>\",\n    \"connectionID\": \"<integer>\",\n    \"id\": \"<integer>\",\n    \"progressDescription\": \"<string>\",\n    \"progressPercent\": \"<integer>\",\n    \"requestBody\": \"<string>\",\n    \"requestType\": \"DNS\",\n    \"status\": \"COMPLETED\",\n    \"ticketExternalID\": \"<string>\",\n    \"userFriendlyError\": \"<string>\",\n    \"userId\": \"<integer>\",\n    \"version\": \"<integer>\",\n    \"provisioning\": \"dedicated-vm\"\n  }\n}",
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-51802e4d-24d5-4fe4-ab75-115a100938c2"
+                            },
+                            {
+                              "id": "89b47432-50ab-4e4b-98a8-957b4f14669d",
+                              "name": "Bad Request",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/request/:requestId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    "request",
+                                    ":requestId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "requestId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<integer>",
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-89b47432-50ab-4e4b-98a8-957b4f14669d"
+                            },
+                            {
+                              "id": "5bc3ce72-e440-4127-8fd0-f3c01304aeab",
+                              "name": "Not Found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/request/:requestId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    "request",
+                                    ":requestId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "requestId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<integer>",
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-5bc3ce72-e440-4127-8fd0-f3c01304aeab"
+                            },
+                            {
+                              "id": "cc00a96f-c253-4465-a2f3-90d7b95af91b",
+                              "name": "Internal Server Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "traceparent",
+                                    "value": "<string>"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/account/:accountId/cluster/request/:requestId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "account",
+                                    ":accountId",
+                                    "cluster",
+                                    "request",
+                                    ":requestId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "accountId"
+                                    },
+                                    {
+                                      "key": "requestId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:51:53.000Z",
+                              "updatedAt": "2026-07-28T02:51:53.000Z",
+                              "uid": "35240-cc00a96f-c253-4465-a2f3-90d7b95af91b"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:51:53.000Z",
+                          "updatedAt": "2026-07-28T02:51:53.000Z",
+                          "uid": "35240-e4a175e4-a223-4bad-bb25-fc31baf3f54f"
+                        }
+                      ],
+                      "id": "4b72357d-cd0e-4888-8beb-bf1fbf9b7e44",
+                      "createdAt": "2026-07-28T02:51:53.000Z",
+                      "updatedAt": "2026-07-28T02:51:53.000Z",
+                      "uid": "35240-4b72357d-cd0e-4888-8beb-bf1fbf9b7e44"
+                    }
+                  ],
+                  "id": "0ce818e6-ead1-48f1-96c7-d67ecf2fc128",
+                  "createdAt": "2026-07-28T02:51:53.000Z",
+                  "updatedAt": "2026-07-28T02:51:53.000Z",
+                  "uid": "35240-0ce818e6-ead1-48f1-96c7-d67ecf2fc128"
+                }
+              ],
+              "id": "d7833922-ce3f-4675-9233-2b89a528f67e",
+              "createdAt": "2026-07-28T02:51:53.000Z",
+              "updatedAt": "2026-07-28T02:51:53.000Z",
+              "uid": "35240-d7833922-ce3f-4675-9233-2b89a528f67e"
+            }
+          ],
+          "id": "af5a7a41-6ce5-48eb-912c-b21baeac5fb3",
+          "createdAt": "2026-07-28T02:51:53.000Z",
+          "updatedAt": "2026-07-28T02:51:53.000Z",
+          "uid": "35240-af5a7a41-6ce5-48eb-912c-b21baeac5fb3"
+        }
+      ],
+      "id": "ab94fd17-decd-4937-92bf-246636b74a1f",
+      "createdAt": "2026-07-28T02:51:53.000Z",
+      "updatedAt": "2026-07-28T02:51:53.000Z",
+      "uid": "35240-ab94fd17-decd-4937-92bf-246636b74a1f"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/"
+    }
+  ]
+}

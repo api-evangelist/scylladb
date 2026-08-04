@@ -1,0 +1,28 @@
+{
+  "provider": "scylladb",
+  "sources": [
+    "scylladb-account-api-openapi.yml",
+    "scylladb-account-cluster-network-api-openapi.yml",
+    "scylladb-account-network-cluster-connection-api-openapi.yml",
+    "scylladb-cluster-api-openapi.yml",
+    "scylladb-cluster-request-api-openapi.yml",
+    "scylladb-deployment-api-openapi.yml",
+    "scylladb-pricing-api-openapi.yml",
+    "scylladb-vectorsearch-api-openapi.yml"
+  ],
+  "outputs": [
+    "scylladb-account-api-openapi.yml",
+    "scylladb-account-cluster-network-api-openapi.yml",
+    "scylladb-account-network-cluster-connection-api-openapi.yml",
+    "scylladb-cluster-api-openapi.yml",
+    "scylladb-cluster-request-api-openapi.yml",
+    "scylladb-deployment-api-openapi.yml",
+    "scylladb-pricing-api-openapi.yml",
+    "scylladb-vectorsearch-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

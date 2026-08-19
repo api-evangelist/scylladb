@@ -1,0 +1,204 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ScyllaDB Cloud Account API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of active cloud-accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cloud-account",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns list of active cloud-accounts for all cloud-providers from given account"
+        },
+        {
+          "info": {
+            "name": "Get availability zones for a cloud account and region",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cloud-account/:cloudAccountId/region/:regionId/zones",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "cloudAccountId",
+                "value": "",
+                "type": "path",
+                "description": "CloudAccountId"
+              },
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "path",
+                "description": "RegionId"
+              },
+              {
+                "name": "instanceTypeId",
+                "value": "",
+                "type": "query",
+                "description": "Instance Type ID to filter available zones"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns list of availability zones for a specific cloud account and region"
+        },
+        {
+          "info": {
+            "name": "Set cluster notification emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/account/:accountId/cluster/:clusterId/notifications/email",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set the contact email address(es) used for cluster notifications"
+        },
+        {
+          "info": {
+            "name": "Gives account details tied to authorized user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/default",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gives account details tied to authorized user."
+        },
+        {
+          "info": {
+            "name": "Get cluster notification emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/notifications/email",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the contact email address(es) used for cluster notifications"
+        },
+        {
+          "info": {
+            "name": "Set cluster notification emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/account/:accountId/notifications/email",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set the contact email address(es) used for cluster notifications"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

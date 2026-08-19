@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ScyllaDB Cloud Account Deployment API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of supported cloud providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/deployment/cloud-providers"
+          },
+          "docs": "Lists details about all cloud provider currently supported in Scylla-Cloud."
+        },
+        {
+          "info": {
+            "name": "Get all scylla cloud versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/deployment/scylla-versions",
+            "params": [
+              {
+                "name": "defaults",
+                "value": "",
+                "type": "query",
+                "description": "Should include default values"
+              }
+            ]
+          },
+          "docs": "List all available ScyllaDB Cloud service versions."
+        },
+        {
+          "info": {
+            "name": "Get all regions for the cloud provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/deployment/cloud-provider/:cloudProviderId/regions",
+            "params": [
+              {
+                "name": "cloudProviderId",
+                "value": "",
+                "type": "path",
+                "description": "Cloud Provider ID (full list [get] /deployment/provider)"
+              },
+              {
+                "name": "defaults",
+                "value": "",
+                "type": "query",
+                "description": "Should include default values"
+              }
+            ]
+          },
+          "docs": "Lists regions supported by the given cloud provider ID."
+        },
+        {
+          "info": {
+            "name": "Get all instances for the selected region",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/deployment/cloud-provider/:cloudProviderId/region/:regionId",
+            "params": [
+              {
+                "name": "cloudProviderId",
+                "value": "",
+                "type": "path",
+                "description": "Cloud Provider ID (full list [get] /deployment/provider)"
+              },
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "path",
+                "description": "Cloud Region ID (full list [get] /deployment/provider/{}/region)"
+              },
+              {
+                "name": "defaults",
+                "value": "",
+                "type": "query",
+                "description": "Should include default values"
+              },
+              {
+                "name": "target",
+                "value": "",
+                "type": "query",
+                "description": "target for the requested instance types"
+              }
+            ]
+          },
+          "docs": "Lists instances supported in given region of given cloud provider."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

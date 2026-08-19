@@ -1,0 +1,346 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ScyllaDB Cloud Account Account Cluster Network API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Cluster Network",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the cluster firewall rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cluster/:clusterId/network/firewall/allowed",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List the cluster firewall rules."
+        },
+        {
+          "info": {
+            "name": "Create a new firewall allowed rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/account/:accountId/cluster/:clusterId/network/firewall/allowed",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new firewall allowed rule."
+        },
+        {
+          "info": {
+            "name": "Delete the firewall rule of given id",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/account/:accountId/cluster/:clusterId/network/firewall/allowed/:ruleId",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "ruleId",
+                "value": "",
+                "type": "path",
+                "description": "Rule ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete the firewall rule of a given id."
+        },
+        {
+          "info": {
+            "name": "Get the details of all cluster VPC peers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/peer",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List the details of all cluster VPC peers."
+        },
+        {
+          "info": {
+            "name": "Create VPC peering according to given request payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/peer",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "Run the request in an asynchronous mode"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create VPC peering according to a given request payload."
+        },
+        {
+          "info": {
+            "name": "Get the details of VPC peer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/peer/:peerId",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "peerId",
+                "value": "",
+                "type": "path",
+                "description": "Peer ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List the details of cluster VPC peer."
+        },
+        {
+          "info": {
+            "name": "Updates VPC peering according to given request payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/peer/:peerId",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "peerId",
+                "value": "",
+                "type": "path",
+                "description": "Peer ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates VPC peering according to given request payload."
+        },
+        {
+          "info": {
+            "name": "Schedule delete VPC peering request (async)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/peer/:peerId",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "peerId",
+                "value": "",
+                "type": "path",
+                "description": "Peer ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Schedule delete VPC peering request (async). Returns a cluster request"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

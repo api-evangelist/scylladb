@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ScyllaDB Cloud Account VectorSearch API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VectorSearch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about vector search nodes in the specified datacenter in the cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cluster/:clusterId/dc/:dcId/vector-search",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "dcId",
+                "value": "",
+                "type": "path",
+                "description": "Datacenter ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves information about vector search nodes in the specified datacenter in the cluster"
+        },
+        {
+          "info": {
+            "name": "Install vector search nodes to the specified datacenter in the cluster (async)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/account/:accountId/cluster/:clusterId/dc/:dcId/vector-search",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "dcId",
+                "value": "",
+                "type": "path",
+                "description": "Datacenter ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Schedules addition of vector search nodes to the specified datacenter in the cluster (async)."
+        },
+        {
+          "info": {
+            "name": "Resize vector search nodes in the specified datacenter in the cluster (async)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/account/:accountId/cluster/:clusterId/dc/:dcId/vector-search",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "dcId",
+                "value": "",
+                "type": "path",
+                "description": "Datacenter ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Schedules resizing of vector search nodes in the specified datacenter in the cluster (async)"
+        },
+        {
+          "info": {
+            "name": "Delete vector search nodes from the specified datacenter in the cluster (async)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/account/:accountId/cluster/:clusterId/dc/:dcId/vector-search",
+            "headers": [
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "dcId",
+                "value": "",
+                "type": "path",
+                "description": "Datacenter ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Schedules deletion of vector search nodes from the specified datacenter in the cluster (async)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

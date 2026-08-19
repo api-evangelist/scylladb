@@ -1,0 +1,246 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ScyllaDB Cloud Account Account network cluster connection API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account network cluster connection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "get the list of all connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/connection",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "List of connection types"
+              },
+              {
+                "name": "dc",
+                "value": "",
+                "type": "query",
+                "description": "Datacenter ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists details of all connection"
+        },
+        {
+          "info": {
+            "name": "creates connection according to given request payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/connection",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates connection according to given request payload"
+        },
+        {
+          "info": {
+            "name": "get cluster connection details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/connection/:connectionId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get connection details"
+        },
+        {
+          "info": {
+            "name": "Updates connection according to given request payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/connection/:connectionId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Recreates cloud objects related to connection according to given request payload. Updates ExternalID at the end"
+        },
+        {
+          "info": {
+            "name": "Updates connection according to given request payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/connection/:connectionId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates connection according to given request payload"
+        },
+        {
+          "info": {
+            "name": "deletes the connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/account/:accountId/cluster/:clusterId/network/vpc/connection/:connectionId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "clusterId",
+                "value": "",
+                "type": "path",
+                "description": "Cluster ID"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Connection ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the connection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -52,6 +52,10 @@ apis:
   - Administration
   - Database
   - NoSQL
+  tags_raw:
+  - Administration
+  - Database
+  - NoSQL
   - Operations
   properties:
   - type: Documentation
@@ -247,6 +251,8 @@ apis:
   humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
   baseURL: https://api.cloud.scylladb.com
   tags:
+  - Vector Search
+  tags_raw:
   - VectorSearch
   properties:
   - type: OpenAPI

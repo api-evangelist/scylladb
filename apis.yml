@@ -263,7 +263,7 @@ apis:
   humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
   baseURL: https://api.cloud.scylladb.com
   tags:
-  - Vector Search
+  - VectorSearch
   tags_raw:
   - VectorSearch
   properties:
@@ -324,8 +324,6 @@ common:
     url: vocabulary/scylladb-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/scylladb-context.jsonld
-  - type: Blog
-    url: blogs/blogs.json
   - type: Plans
     url: plans/scylladb-plans-pricing.yml
   - type: RateLimits

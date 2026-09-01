@@ -263,7 +263,7 @@ apis:
   humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
   baseURL: https://api.cloud.scylladb.com
   tags:
-  - VectorSearch
+  - Vector Search
   tags_raw:
   - VectorSearch
   properties:

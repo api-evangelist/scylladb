@@ -258,18 +258,16 @@ apis:
     url: examples/scylladb-node-info-example.json
   - type: Examples
     url: examples/scylladb-firewall-rules-example.json
-- aid: scylladb:scylladb-vectorsearch-api
-  name: ScyllaDB VectorSearch API
-  description: The VectorSearch API from ScyllaDB — 1 operation(s) for vectorsearch.
-  humanURL: https://cloud.docs.scylladb.com/stable/api-docs/
-  baseURL: https://api.cloud.scylladb.com
+- aid: scylladb:scylladb-vector-search-api
+  name: ScyllaDB Vector Search API
+  description: The Vector Search API from ScyllaDB — 1 operation(s) for vector search.
+  humanURL: https://docs.scylladb.com/stable/operating-scylla/rest.html
+  baseURL: http://localhost:10000
   tags:
   - Vector Search
-  tags_raw:
-  - VectorSearch
   properties:
   - type: OpenAPI
-    url: openapi/scylladb-vectorsearch-api-openapi.yml
+    url: openapi/scylladb-vector-search-api-openapi.yml
   - type: Documentation
     url: https://cloud.docs.scylladb.com/stable/api-docs/
   - type: JSONSchema

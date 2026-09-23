@@ -1,0 +1,437 @@
+openapi: 3.2.0
+info:
+  title: ScyllaDB Cloud Vector Search API
+  version: 1.0.0
+  description: '### Error codes mapping
+
+    000001 Too many requests sent from your IP address.'
+servers:
+- url: /
+security:
+- Authorization: []
+tags:
+- name: Vector Search
+paths:
+  /account/{accountId}/cluster/{clusterId}/dc/{dcId}/vector-search:
+    post:
+      operationId: installVectorSearch
+      description: Schedules addition of vector search nodes to the specified datacenter in the cluster (async).
+      summary: Install vector search nodes to the specified datacenter in the cluster (async)
+      x-public: true
+      tags:
+      - Vector Search
+      parameters:
+      - in: header
+        name: traceparent
+        schema:
+          type: string
+      - in: path
+        description: Account ID
+        name: accountId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Cluster ID
+        name: clusterId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Datacenter ID
+        name: dcId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Parameters for adding vector search nodes
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VectorSearchRequest'
+      security:
+      - Authorization: []
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRequest'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: integer
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: integer
+        '500':
+          description: Internal Server Error
+    delete:
+      operationId: deleteVectorSearch
+      description: Schedules deletion of vector search nodes from the specified datacenter in the cluster (async)
+      summary: Delete vector search nodes from the specified datacenter in the cluster (async)
+      x-public: true
+      tags:
+      - Vector Search
+      parameters:
+      - in: header
+        name: traceparent
+        schema:
+          type: string
+      - in: path
+        description: Account ID
+        name: accountId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Cluster ID
+        name: clusterId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Datacenter ID
+        name: dcId
+        required: true
+        schema:
+          type: integer
+      security:
+      - Authorization: []
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRequest'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: integer
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: integer
+        '500':
+          description: Internal Server Error
+    get:
+      operationId: getVectorSearchInfo
+      description: Retrieves information about vector search nodes in the specified datacenter in the cluster
+      summary: Get information about vector search nodes in the specified datacenter in the…
+      x-public: true
+      tags:
+      - Vector Search
+      parameters:
+      - in: header
+        name: traceparent
+        schema:
+          type: string
+      - in: path
+        description: Account ID
+        name: accountId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Cluster ID
+        name: clusterId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Datacenter ID
+        name: dcId
+        required: true
+        schema:
+          type: integer
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectorSearchInfo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: integer
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: integer
+        '500':
+          description: Internal Server Error
+    patch:
+      operationId: resizeVectorSearch
+      description: Schedules resizing of vector search nodes in the specified datacenter in the cluster (async)
+      summary: Resize vector search nodes in the specified datacenter in the cluster (async)
+      x-public: true
+      tags:
+      - Vector Search
+      parameters:
+      - in: header
+        name: traceparent
+        schema:
+          type: string
+      - in: path
+        description: Account ID
+        name: accountId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Cluster ID
+        name: clusterId
+        required: true
+        schema:
+          type: integer
+      - in: path
+        description: Datacenter ID
+        name: dcId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Parameters for resizing vector search nodes
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VectorSearchRequest'
+      security:
+      - Authorization: []
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterRequest'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: integer
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: integer
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    CPUInfo:
+      type: object
+      x-public: true
+      properties:
+        usagePercent:
+          format: float64
+          type: number
+    MemoryInfo:
+      type: object
+      x-public: true
+      properties:
+        freeGiB:
+          format: float64
+          type: number
+        usagePercent:
+          format: float64
+          type: number
+    VectorSearchNode:
+      type: object
+      description: Details about the vector search nodes in the rack
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the vector search node
+          example: 125
+        instanceTypeId:
+          type: integer
+          description: ID of the instance type used for the vector search node
+          example: 175
+        status:
+          $ref: '#/components/schemas/VectorSearchNodeStatus'
+        up:
+          description: Shows whether the node is up and running.
+          type: boolean
+        cpu:
+          $ref: '#/components/schemas/CPUInfo'
+        memory:
+          $ref: '#/components/schemas/MemoryInfo'
+        indexCount:
+          description: Number of vector search indexes stored on the node.
+          type: integer
+    VectorSearchNodeStatus:
+      type: string
+      description: Status of the node
+      x-public: true
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - PENDING_DELETE
+      - DELETED
+      - QUEUED
+    AvailabilityZone:
+      type: object
+      description: Details about the availability zone where vector search nodes are deployed
+      x-public: true
+      properties:
+        azid:
+          type: string
+          description: ID of the availability zone
+          example: use1-az5
+        rackName:
+          type: string
+          description: Name of the rack
+          example: use1-az5
+        nodes:
+          type: array
+          description: List of vector search nodes in the availability zone
+          items:
+            $ref: '#/components/schemas/VectorSearchNode'
+    VectorSearchRequest:
+      type: object
+      description: Parameters for adding vector search nodes to an existing cluster
+      x-public: true
+      required:
+      - nodeCount
+      - defaultInstanceTypeId
+      properties:
+        nodeCount:
+          type: integer
+          example: 2
+          minimum: 1
+          maximum: 27
+          description: Number of vector search nodes to create in the datacenter, nodes are distributed evenly across cluster racks
+        defaultInstanceTypeId:
+          type: integer
+          description: ID of the instance type to use for vector search nodes (instance type list [get] /deployment/cloud-provider/{}/region/{}?target=VECTOR_SEARCH)
+    VectorSearchStatus:
+      x-public: true
+      enum:
+      - HEALTHY
+      - DEGRADED
+      - UNHEALTHY
+      - UNKNOWN
+      type: string
+      x-enum-varnames:
+      - vectorSearchStatusHealthy
+      - vectorSearchStatusDegraded
+      - vectorSearchStatusUnhealthy
+      - vectorSearchStatusUnknown
+    ClusterRequest:
+      type: object
+      x-public: true
+      properties:
+        accountId:
+          type: integer
+          description: ID of the account where cluster belongs to
+        clusterId:
+          type: integer
+          description: ID of the cluster where the datacenter belongs to
+        connectionID:
+          type: integer
+        id:
+          type: integer
+          description: ID of the cluster request
+        progressDescription:
+          type: string
+          description: Request progress description
+        progressPercent:
+          type: integer
+          description: Request processing progress
+        requestBody:
+          type: string
+          description: JSON body of the request
+        requestType:
+          type: string
+          description: Defines type of the request
+          enum:
+          - ADD_DC
+          - CREATE_CLUSTER
+          - DELETE_CLUSTER
+          - RESIZE_CLUSTER_V2
+          - RESIZE_CLUSTER_V3
+          - UPGRADE_CLUSTER
+          - SCALE_CLUSTER
+          - INSTALL_MANAGER
+          - DNS
+          - CREATE_VPC_PEERING
+          - DELETE_VPC_PEERING
+          - CREATE_CLUSTER_CONNECTION
+          - DELETE_CLUSTER_CONNECTION
+          - UPDATE_CLUSTER_CONNECTION
+          - INSTALL_VECTOR_SEARCH
+          - RESIZE_VECTOR_SEARCH
+          - DELETE_VECTOR_SEARCH
+        status:
+          type: string
+          description: Status of the request
+          enum:
+          - QUEUED
+          - IN_PROGRESS
+          - FAILED
+          - COMPLETED
+          - CANCELLED
+        ticketExternalID:
+          description: External ID from Zendesk ticket
+          type: string
+        userFriendlyError:
+          type: string
+          description: Descriptive information about the potential error
+          deprecated: true
+        userId:
+          type: integer
+          description: ID of the user who created the request
+        version:
+          type: integer
+          description: Version of the request. Always = 1
+        provisioning:
+          default: dedicated-vm
+          enum:
+          - dedicated-vm
+          type: string
+    VectorSearchInfo:
+      type: object
+      description: Information about a vector search node in a cluster datacenter
+      x-public: true
+      properties:
+        availabilityZones:
+          type: array
+          description: List of availability zones where vector search nodes are deployed
+          items:
+            $ref: '#/components/schemas/AvailabilityZone'
+        status:
+          $ref: '#/components/schemas/VectorSearchStatus'
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer
+      description: 'Authorization header, required in all authenticated requests.
+
+
+        Header format: **Authorization: Bearer <token>**
+
+        '

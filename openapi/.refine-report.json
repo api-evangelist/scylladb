@@ -1,14 +1,7 @@
 {
   "provider": "scylladb",
   "sources": [
-    "scylladb-account-api-openapi.yml",
-    "scylladb-account-cluster-network-api-openapi.yml",
-    "scylladb-account-network-cluster-connection-api-openapi.yml",
-    "scylladb-cluster-api-openapi.yml",
-    "scylladb-cluster-request-api-openapi.yml",
-    "scylladb-deployment-api-openapi.yml",
-    "scylladb-pricing-api-openapi.yml",
-    "scylladb-vectorsearch-api-openapi.yml"
+    "_original/scylladb-cloud-management-api-openapi.yml"
   ],
   "outputs": [
     "scylladb-account-api-openapi.yml",
@@ -20,9 +13,33 @@
     "scylladb-pricing-api-openapi.yml",
     "scylladb-vectorsearch-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "scylladb-cloud-management-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: Account",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: Account Cluster Network",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: Account network cluster connection",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: Cluster",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: Cluster Request",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: Deployment",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: Pricing",
+    "scylladb-cloud-management-api-openapi.yml: declared missing tag: VectorSearch",
+    "superseded outputs removed: scylladb-vector-search-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 9 total)"
+  ],
+  "skipped": [
+    "scylladb-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scylladb-account-cluster-network-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scylladb-account-network-cluster-connection-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scylladb-cluster-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scylladb-cluster-request-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scylladb-deployment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scylladb-pricing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scylladb-vector-search-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -416,16 +416,6 @@ paths:
       - Account network cluster connection
 components:
   schemas:
-    CIDR:
-      type: string
-      description: CIDR block in the form of ip/mask
-      x-public: true
-      example: 192.0.2.0/24
-    ClusterConnectionAwaitingData:
-      type: object
-      x-public: true
-      additionalProperties:
-        type: string
     ClusterConnection:
       type: object
       description: Peering details information
@@ -558,6 +548,16 @@ components:
           enum:
           - dedicated-vm
           type: string
+    CIDR:
+      type: string
+      description: CIDR block in the form of ip/mask
+      x-public: true
+      example: 192.0.2.0/24
+    ClusterConnectionAwaitingData:
+      type: object
+      x-public: true
+      additionalProperties:
+        type: string
   securitySchemes:
     Authorization:
       type: http

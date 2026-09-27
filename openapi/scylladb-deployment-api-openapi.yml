@@ -189,69 +189,23 @@ paths:
                     - instances
 components:
   schemas:
-    errorObject:
+    cloudProvider:
       type: object
-      x-public: true
-      properties:
-        error:
-          type: string
-          example: '040101'
-    region:
-      type: object
-      description: Region and continent description
+      description: Cloud provider description
       x-public: true
       properties:
         id:
           type: integer
-          description: ID of the region (internal for scylla-cloud)
-          example: 30
-        externalId:
-          type: string
-          description: External ID of the cloud provider region
-          example: us-east1
-        cloudProviderId:
-          type: integer
-          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
-          example: 2
+          description: ID of the cloud provider (internal for scylla-cloud)
+          example: 1
         name:
           type: string
-          description: Name of the region
-          example: us-east1
-        dcName:
+          description: Name of the cloud provider
+          example: AWS
+        rootAccountId:
           type: string
-          description: Name of the data center
-          example: GCE_US_EAST_1
-        fullName:
-          type: string
-          description: Full name of the region
-          example: us-east1 (South Carolina)
-        continent:
-          type: string
-          description: Continent name
-        backupStorageGBCost:
-          type: number
-          description: Cost of storing 1 Gigabyte in backup
-          example: 0.02
-        trafficSameRegionInGBCost:
-          type: number
-          description: Cost of receiving 1 Gigabyte from the same region
-          example: 0
-        trafficSameRegionOutGBCost:
-          type: number
-          description: Cost of sending 1 Gigabyte to the same region
-          example: 0
-        trafficCrossRegionOutGBCost:
-          type: number
-          description: Cost of sending 1 Gigabyte to another region
-          example: 0
-        trafficInternetOutGBCost:
-          type: number
-          description: Cost of sending 1 Gigabyte to the internet
-          example: 0
-        multiRegionExternalId:
-          description: External ID of the cloud provider multi-region
-          example: us
-          type: string
+          description: Cloud provider account ID
+          example: '123456789012'
     instance:
       type: object
       description: Cloud provider instance pricing description
@@ -361,6 +315,69 @@ components:
         freeTier:
           description: This instance type can be used on a free tier cluster
           type: boolean
+    errorObject:
+      type: object
+      x-public: true
+      properties:
+        error:
+          type: string
+          example: '040101'
+    region:
+      type: object
+      description: Region and continent description
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the region (internal for scylla-cloud)
+          example: 30
+        externalId:
+          type: string
+          description: External ID of the cloud provider region
+          example: us-east1
+        cloudProviderId:
+          type: integer
+          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
+          example: 2
+        name:
+          type: string
+          description: Name of the region
+          example: us-east1
+        dcName:
+          type: string
+          description: Name of the data center
+          example: GCE_US_EAST_1
+        fullName:
+          type: string
+          description: Full name of the region
+          example: us-east1 (South Carolina)
+        continent:
+          type: string
+          description: Continent name
+        backupStorageGBCost:
+          type: number
+          description: Cost of storing 1 Gigabyte in backup
+          example: 0.02
+        trafficSameRegionInGBCost:
+          type: number
+          description: Cost of receiving 1 Gigabyte from the same region
+          example: 0
+        trafficSameRegionOutGBCost:
+          type: number
+          description: Cost of sending 1 Gigabyte to the same region
+          example: 0
+        trafficCrossRegionOutGBCost:
+          type: number
+          description: Cost of sending 1 Gigabyte to another region
+          example: 0
+        trafficInternetOutGBCost:
+          type: number
+          description: Cost of sending 1 Gigabyte to the internet
+          example: 0
+        multiRegionExternalId:
+          description: External ID of the cloud provider multi-region
+          example: us
+          type: string
     scyllaVersion:
       type: object
       description: Represent version of the ScyllaDB installed on nodes
@@ -393,23 +410,6 @@ components:
           type: string
           description: Version name
           example: Scylla Enterprise
-    cloudProvider:
-      type: object
-      description: Cloud provider description
-      x-public: true
-      properties:
-        id:
-          type: integer
-          description: ID of the cloud provider (internal for scylla-cloud)
-          example: 1
-        name:
-          type: string
-          description: Name of the cloud provider
-          example: AWS
-        rootAccountId:
-          type: string
-          description: Cloud provider account ID
-          example: '123456789012'
   securitySchemes:
     Authorization:
       type: http

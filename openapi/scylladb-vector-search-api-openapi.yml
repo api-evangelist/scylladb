@@ -248,16 +248,41 @@ components:
         usagePercent:
           format: float64
           type: number
-    MemoryInfo:
+    VectorSearchRequest:
       type: object
+      description: Parameters for adding vector search nodes to an existing cluster
+      x-public: true
+      required:
+      - nodeCount
+      - defaultInstanceTypeId
+      properties:
+        nodeCount:
+          type: integer
+          example: 2
+          minimum: 1
+          maximum: 27
+          description: Number of vector search nodes to create in the datacenter, nodes are distributed evenly across cluster racks
+        defaultInstanceTypeId:
+          type: integer
+          description: ID of the instance type to use for vector search nodes (instance type list [get] /deployment/cloud-provider/{}/region/{}?target=VECTOR_SEARCH)
+    AvailabilityZone:
+      type: object
+      description: Details about the availability zone where vector search nodes are deployed
       x-public: true
       properties:
-        freeGiB:
-          format: float64
-          type: number
-        usagePercent:
-          format: float64
-          type: number
+        azid:
+          type: string
+          description: ID of the availability zone
+          example: use1-az5
+        rackName:
+          type: string
+          description: Name of the rack
+          example: use1-az5
+        nodes:
+          type: array
+          description: List of vector search nodes in the availability zone
+          items:
+            $ref: '#/components/schemas/VectorSearchNode'
     VectorSearchNode:
       type: object
       description: Details about the vector search nodes in the rack
@@ -283,64 +308,6 @@ components:
         indexCount:
           description: Number of vector search indexes stored on the node.
           type: integer
-    VectorSearchNodeStatus:
-      type: string
-      description: Status of the node
-      x-public: true
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - PENDING_DELETE
-      - DELETED
-      - QUEUED
-    AvailabilityZone:
-      type: object
-      description: Details about the availability zone where vector search nodes are deployed
-      x-public: true
-      properties:
-        azid:
-          type: string
-          description: ID of the availability zone
-          example: use1-az5
-        rackName:
-          type: string
-          description: Name of the rack
-          example: use1-az5
-        nodes:
-          type: array
-          description: List of vector search nodes in the availability zone
-          items:
-            $ref: '#/components/schemas/VectorSearchNode'
-    VectorSearchRequest:
-      type: object
-      description: Parameters for adding vector search nodes to an existing cluster
-      x-public: true
-      required:
-      - nodeCount
-      - defaultInstanceTypeId
-      properties:
-        nodeCount:
-          type: integer
-          example: 2
-          minimum: 1
-          maximum: 27
-          description: Number of vector search nodes to create in the datacenter, nodes are distributed evenly across cluster racks
-        defaultInstanceTypeId:
-          type: integer
-          description: ID of the instance type to use for vector search nodes (instance type list [get] /deployment/cloud-provider/{}/region/{}?target=VECTOR_SEARCH)
-    VectorSearchStatus:
-      x-public: true
-      enum:
-      - HEALTHY
-      - DEGRADED
-      - UNHEALTHY
-      - UNKNOWN
-      type: string
-      x-enum-varnames:
-      - vectorSearchStatusHealthy
-      - vectorSearchStatusDegraded
-      - vectorSearchStatusUnhealthy
-      - vectorSearchStatusUnknown
     ClusterRequest:
       type: object
       x-public: true
@@ -413,6 +380,29 @@ components:
           enum:
           - dedicated-vm
           type: string
+    VectorSearchStatus:
+      x-public: true
+      enum:
+      - HEALTHY
+      - DEGRADED
+      - UNHEALTHY
+      - UNKNOWN
+      type: string
+      x-enum-varnames:
+      - vectorSearchStatusHealthy
+      - vectorSearchStatusDegraded
+      - vectorSearchStatusUnhealthy
+      - vectorSearchStatusUnknown
+    MemoryInfo:
+      type: object
+      x-public: true
+      properties:
+        freeGiB:
+          format: float64
+          type: number
+        usagePercent:
+          format: float64
+          type: number
     VectorSearchInfo:
       type: object
       description: Information about a vector search node in a cluster datacenter
@@ -425,6 +415,16 @@ components:
             $ref: '#/components/schemas/AvailabilityZone'
         status:
           $ref: '#/components/schemas/VectorSearchStatus'
+    VectorSearchNodeStatus:
+      type: string
+      description: Status of the node
+      x-public: true
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - PENDING_DELETE
+      - DELETED
+      - QUEUED
   securitySchemes:
     Authorization:
       type: http

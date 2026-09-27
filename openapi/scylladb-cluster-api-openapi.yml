@@ -610,66 +610,231 @@ paths:
           description: Bad Gateway
 components:
   schemas:
-    ClusterConnection:
+    NodeInfo:
       type: object
-      description: Peering details information
       x-public: true
       properties:
-        awaitingData:
-          allOf:
-          - type: object
-          - $ref: '#/components/schemas/ClusterConnectionAwaitingData'
-          description: AwaitingData represents information regarding the action that needs to be done to move connection creating process further
-        awaitingForClient:
-          type: boolean
-          description: AwaitingForClient if true, then going to next stage require user action
-        cidrlist:
-          type: array
-          description: CIDR list of the routes cluster have access through this connection
-          items:
-            $ref: '#/components/schemas/CIDR'
-        clusterDCID:
-          type: integer
-          description: ID of the cluster DC
-        clusterID:
-          type: integer
-          description: ID of the cluster
-        clusterVPCID:
-          type: integer
-          description: ID of the VPC
-        data:
-          type: object
-          additionalProperties:
-            type: string
-        externalID:
+        azName:
           type: string
-          description: ExternalID and ID of the connection object on the cloud
+          description: Name of the availability zone
+        azId:
+          type: string
+          description: ID of the availability zone
+        rackName:
+          type: string
+          description: Name of the rack
+        billingStartDate:
+          type: string
+          description: Starting date for the billing
+        cloudProviderId:
+          type: integer
+          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
+        instanceId:
+          type: integer
+          description: ID of the instance type
+        regionId:
+          type: integer
+          description: ID of the cloud provider region (full list [get] /deployment/cloud-providers/{}/regions)
+        dcId:
+          type: integer
+          description: ID of the datacenter
+        clusterJoinDate:
+          type: string
+          description: Date when server joined the cluster
+        dns:
+          type: string
+          description: Server's DNS name
         id:
           type: integer
-          description: ID of the created connection (ScyllaDB internal)
-        name:
+          description: ID of the node
+        state:
           type: string
-          description: Name if the connection, only to show on UI
-        stage:
+          description: Status of the node
+          enum:
+          - NORMAL
+          - JOINING
+          - LEAVING
+          - DECOMMISSIONED
+          - MOVING
+          - REMOVED
+        privateIp:
           type: string
-          description: Stage if there is ongoing process it shows where this process exactly at
-        stageMessage:
+          description: Private IP of the node
+        publicIp:
           type: string
-          description: StageMessage is a message from stage processor why it can't move further
+          description: Public IP of the node
+        serviceId:
+          description: Deprecated
+          type: integer
+          deprecated: true
+        serviceVersionId:
+          description: Deprecated
+          type: integer
+          deprecated: true
         status:
           type: string
+          description: Status of the node
           enum:
-          - INIT
-          - PENDING
           - ACTIVE
           - INACTIVE
-          - DELETING
+          - PENDING_DELETE
           - DELETED
-          - FAILED
+          - QUEUED
+    DealsInUse:
+      type: object
+      x-public: true
+      properties:
+        expiresAt:
+          type: string
         type:
           type: string
+          description: Type of the deal
           enum:
-          - AWS_TGW_ATTACHMENT
+          - FREE_TIER
+          - JUMP_START
+    APIDCScalingPolicyVCPU:
+      type: object
+      x-public: true
+      properties:
+        min:
+          type: integer
+          description: Minimum number of vCPUs
+    EncryptionAtRest:
+      type: object
+      x-public: true
+      properties:
+        keyId:
+          type: string
+          description: 'Provide the ID of the customer-managed key created in the ScyllaDB Cloud portal.
+
+            Omit this item to allow ScyllaDB Cloud to automatically create a service-managed key.'
+          example: key-deadbeef
+        provider:
+          type: string
+          description: key provider, customer managed or scylla managed
+          enum:
+          - scylla-aws
+          - scylla-gcp
+          - aws
+          - gcp
+          example: scylla-aws
+    ClusterNetwork:
+      type: object
+      x-public: true
+      properties:
+        clusterId:
+          type: integer
+          description: ID of the cluster where the datacenter belongs to
+        id:
+          type: integer
+          description: ID of the VPC (internal for scylla-cloud)
+        cloudProviderId:
+          type: integer
+          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
+        regionId:
+          type: integer
+          description: ID of the cloud provider region (full list [get] /deployment/cloud-provider/{}/regions)
+        cidrBlock:
+          $ref: '#/components/schemas/CIDR'
+    FirewallRule:
+      x-public: true
+      properties:
+        clusterId:
+          type: integer
+          description: ID of the cluster
+        id:
+          type: integer
+          description: ID of the firewall allowed rule
+        address:
+          type: string
+          description: CIDR notation
+          example: 192.0.2.0/24
+      type: object
+    NodeInfoEnriched:
+      x-public: true
+      allOf:
+      - $ref: '#/components/schemas/NodeInfo'
+      - type: object
+        properties:
+          cloudProvider:
+            $ref: '#/components/schemas/cloudProvider'
+          region:
+            $ref: '#/components/schemas/region'
+          instance:
+            $ref: '#/components/schemas/instance'
+          dataCenter:
+            $ref: '#/components/schemas/ClusterDCInfo'
+    APIDCScalingPolicyStorage:
+      type: object
+      x-public: true
+      properties:
+        min:
+          type: integer
+          description: 'Minimum storage size for your cluster, in GB. This total provisioned
+
+            storage will not be fully available for data, because the data takes
+
+            more storage than its size due to replication.'
+        targetUtilization:
+          type: number
+          description: Target utilization ratio. Percentage, 0 to 1
+          format: float64
+    VectorSearch:
+      type: object
+      x-public: true
+      properties:
+        nodeCount:
+          description: Number of vector search nodes to create in the datacenter, nodes are distributed evenly across cluster racks
+          type: integer
+          example: 2
+          minimum: 1
+          maximum: 27
+        defaultInstanceTypeId:
+          type: integer
+          description: ID of the instance type to use for vector search nodes (instance type list [get] /deployment/cloud-provider/{}/region/{}?target=VECTOR_SEARCH)
+    ClusterWithMetrics:
+      x-public: true
+      allOf:
+      - $ref: '#/components/schemas/ClusterInfo'
+      - type: object
+        properties:
+          instanceId:
+            type: integer
+            description: ID of the instance type
+          metrics:
+            type: object
+            additionalProperties:
+              type: number
+              description: Map of cluster metrics [metric_name | value]
+    MetricName:
+      type: string
+      x-public: true
+      description: Available metric names for cluster monitoring
+      enum:
+      - NODES_UP
+      - NODES_DOWN
+      - STORAGE_FREE
+      - STORAGE_USED
+      - STORAGE_FREE_SANDBOX
+      - STORAGE_USED_SANDBOX
+      - STORAGE_UTILIZATION_AVG_30D
+      - STORAGE_UTILIZATION_AVG_30D_SANDBOX
+      - CPU_LOAD
+      - TOTAL_REQUESTS_RATE
+      - READS_RATE
+      - WRITES_RATE
+      - LATENCY_READ_AVERAGE
+      - LATENCY_READ_95TH
+      - LATENCY_WRITE_AVERAGE
+      - LATENCY_WRITE_95TH
+      - ALTERNATOR_LATENCY_GETITEM_AVERAGE
+      - ALTERNATOR_LATENCY_PUTITEM_AVERAGE
+      - ALTERNATOR_LATENCY_GETITEM_95TH
+      - ALTERNATOR_LATENCY_PUTITEM_95TH
+      - ALTERNATOR_GETITEM_NUM_OPS
+      - ALTERNATOR_PUTITEM_NUM_OPS
+      - ALTERNATOR_QUERY_NUM_OPS
+      - ALTERNATOR_SCAN_NUM_OPS
     NotificationEmail:
       x-public: true
       type: object
@@ -686,20 +851,264 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterNotification'
-    ClusterNotification:
+    ClusterDetailedInfo:
       x-public: true
-      type: object
+      allOf:
+      - $ref: '#/components/schemas/ClusterEnriched'
+      - type: object
+        properties:
+          replicationFactor:
+            type: integer
+            description: Replication Factor (RF)
+          broadcastType:
+            type: string
+            description: Broadcast type
+            enum:
+            - PRIVATE
+            - PUBLIC
+          grafanaUrl:
+            type: string
+            description: URL of grafana (part of Monitoring Stack)
+          createdAt:
+            type: string
+            description: Creation date
+            format: date-time
+          promProxyEnabled:
+            type: boolean
+            description: Prometheus proxy enabled flag
+          rebootEnabled:
+            type: boolean
+            description: Determines if node reboot is enabled
+          clientIp:
+            type: string
+          allowedIps:
+            type: array
+            description: List of CIDR formatted rules a.b.c.d/e
+            items:
+              $ref: '#/components/schemas/FirewallRule'
+          dataCenters:
+            type: array
+            items:
+              $ref: '#/components/schemas/ClusterDCInfoEnriched'
+          nodes:
+            type: array
+            items:
+              $ref: '#/components/schemas/NodeInfoEnriched'
+          vpcList:
+            type: array
+            items:
+              $ref: '#/components/schemas/ClusterNetwork'
+          vpcPeeringList:
+            type: array
+            items:
+              $ref: '#/components/schemas/ClusterVPCPeeringInfo'
+          connections:
+            type: array
+            items:
+              $ref: '#/components/schemas/ClusterConnection'
+    ClusterResizeResponse:
+      x-public: true
       properties:
-        clusterId:
+        accountID:
+          description: ID of the account which was used to create the request
+          type: integer
+        clusterID:
           description: ID of the cluster
           type: integer
-        clusterName:
-          description: Name of the cluster
+        id:
+          description: ID of the request
+          type: integer
+        progressDescription:
+          description: Request progress description
           type: string
-        emails:
-          type: array
+        progressPercent:
+          description: Request processing progress
+          type: integer
+        provisioning:
+          default: dedicated-vm
+          enum:
+          - dedicated-vm
+          type: string
+        requestBody:
+          description: JSON body of the request
+          type: string
+        requestType:
+          description: Defines the type of the request
+          enum:
+          - RESIZE_CLUSTER_V2
+          - RESIZE_CLUSTER_V3
+          type: string
+        status:
+          description: Status of the request
+          enum:
+          - QUEUED
+          - IN_PROGRESS
+          - FAILED
+          - COMPLETED
+          - CANCELLED
+          type: string
+        userFriendlyError:
+          type: string
+          description: Descriptive information about the potential error
+          deprecated: true
+        userID:
+          description: ID of the user who created the request
+          type: integer
+        version:
+          description: Version of the request. Always = 1
+          type: integer
+      type: object
+    ClusterConnectionAwaitingData:
+      type: object
+      x-public: true
+      additionalProperties:
+        type: string
+    ClusterDCInfoEnriched:
+      x-public: true
+      allOf:
+      - $ref: '#/components/schemas/ClusterDCInfo'
+      - type: object
+        properties:
+          cloudProvider:
+            $ref: '#/components/schemas/cloudProvider'
+          region:
+            $ref: '#/components/schemas/region'
+    CIDR:
+      type: string
+      description: CIDR block in the form of ip/mask
+      x-public: true
+      example: 192.0.2.0/24
+    ClusterVPCPeeringInfo:
+      type: object
+      x-public: true
+      properties:
+        externalId:
+          type: string
+          description: External ID of the VPC peering
+          example: pcx-21f1c5d76e55f2b0c
+        id:
+          type: integer
+          description: ID of the VPC peering (scyllaDB internal)
+        networkName:
+          type: string
+          description: Name of the network (GCP specific)
+        ownerId:
+          type: string
+          description: Owner of the peering (AWS account ID or GCP project ID)
+        vpcId:
+          type: string
+          description: Peer VPC external ID
+          example: vpc-11f1c5d76e55f2b0c
+        cidrList:
+          description: List of CIDRs
           items:
-            type: string
+            $ref: '#/components/schemas/CIDR'
+          type: array
+        cidrBlockVerified:
+          type: array
+          description: List of CIDRs
+          items:
+            $ref: '#/components/schemas/CIDR'
+        regionId:
+          type: integer
+          description: ID of the cloud provider region, returned for AWS clusters only (full list [get] /deployment/cloud-provider/{}/regions)
+        projectId:
+          type: string
+          description: GCP Project ID (GCP specific)
+        status:
+          type: string
+          description: Status of the VPC peering
+          enum:
+          - INITIATING_REQUEST
+          - PENDING_ACCEPTANCE
+          - DELETING
+          - DELETED
+          - FAILED
+          - REJECTED
+          - EXPIRED
+          - PROVISIONING
+          - ACTIVE
+          - MISMATCHED
+          - INACTIVE
+        expiresAt:
+          type: string
+          description: Expiration time
+        allowCql:
+          type: boolean
+          description: Is CQL connection allowed for peering CIDRs
+        dcId:
+          description: ID of the cluster's data center
+          type: integer
+    ClusterCreateResponse:
+      x-public: true
+      allOf:
+      - $ref: '#/components/schemas/ClusterCreateRequestV1'
+      - type: object
+        properties:
+          cloudProvider:
+            $ref: '#/components/schemas/cloudProvider'
+          scyllaVersion:
+            $ref: '#/components/schemas/scyllaVersion'
+          region:
+            $ref: '#/components/schemas/region'
+          instance:
+            $ref: '#/components/schemas/instance'
+    ClusterDCInfo:
+      type: object
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the datacenter
+        clusterId:
+          type: integer
+          description: ID of the cluster where the datacenter belongs to
+        cloudProviderId:
+          type: integer
+          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
+        regionId:
+          type: integer
+          description: ID of the cloud provider region (full list [get] /deployment/cloud-provider/{}/regions)
+        replicationFactor:
+          type: integer
+          description: Replication Factor (RF)
+        cidrBlock:
+          $ref: '#/components/schemas/CIDR'
+        accountCloudProviderCredentialsId:
+          type: integer
+          description: ID of the account credentials
+        status:
+          type: string
+          description: Status of the data center
+          enum:
+          - ACTIVE
+          - INIT
+          - INACTIVE
+          - DELETED
+          - BOOTSTRAP_COMPLETE
+          - BOOTSTRAP_ERROR
+          - JOINING
+          - JOINING_ERROR
+        name:
+          type: string
+          description: Name of the data center
+        instanceId:
+          type: integer
+          description: ID of the instance type
+        scaling:
+          allOf:
+          - $ref: '#/components/schemas/APIDCScaling'
+          description: Datacenter scaling information.
+    ClusterMaintenanceWindow:
+      x-public: true
+      properties:
+        duration:
+          type: integer
+          description: only 3-hour time windows are allowed (10800000 seconds)
+          example: 10800000
+        rrule:
+          type: string
+          example: FREQ=DAILY;BYDAY=WE;BYHOUR=14;BYMINUTE=0;BYSECOND=0
     ClusterResizeDCNodes:
       type: object
       x-public: true
@@ -722,122 +1131,85 @@ components:
       required:
       - dcId
       - wantedSize
-    EncryptionAtRest:
+    ClusterRequest:
       type: object
       x-public: true
       properties:
-        keyId:
-          type: string
-          description: 'Provide the ID of the customer-managed key created in the ScyllaDB Cloud portal.
-
-            Omit this item to allow ScyllaDB Cloud to automatically create a service-managed key.'
-          example: key-deadbeef
-        provider:
-          type: string
-          description: key provider, customer managed or scylla managed
-          enum:
-          - scylla-aws
-          - scylla-gcp
-          - aws
-          - gcp
-          example: scylla-aws
-    FirewallRule:
-      x-public: true
-      properties:
-        clusterId:
+        accountId:
           type: integer
-          description: ID of the cluster
-        id:
-          type: integer
-          description: ID of the firewall allowed rule
-        address:
-          type: string
-          description: CIDR notation
-          example: 192.0.2.0/24
-      type: object
-    ClusterResizeRequest:
-      type: object
-      x-public: true
-      properties:
-        dcNodes:
-          type: array
-          description: Mapping for the requested changes for each DC
-          items:
-            $ref: '#/components/schemas/ClusterResizeDCNodes'
-    scyllaVersion:
-      type: object
-      description: Represent version of the ScyllaDB installed on nodes
-      x-public: true
-      properties:
-        id:
-          type: integer
-          description: ID of the service version
-          example: 103
-        version:
-          type: string
-          description: Name of the service version
-          example: 2021.1.16
-        description:
-          type: string
-          description: Version description
-          example: Scylla Enterprise 2021.1.16
-        newCluster:
-          type: string
-          description: Describes if this version should be available for creating new clusters using the frontend wizard
-          example: DISABLED
-          enum:
-          - ENABLED
-          - DISABLED
-        serviceId:
-          type: integer
-          description: ID of the service
-          example: 1
-        name:
-          type: string
-          description: Version name
-          example: Scylla Enterprise
-    NodeInfoEnriched:
-      x-public: true
-      allOf:
-      - $ref: '#/components/schemas/NodeInfo'
-      - type: object
-        properties:
-          cloudProvider:
-            $ref: '#/components/schemas/cloudProvider'
-          region:
-            $ref: '#/components/schemas/region'
-          instance:
-            $ref: '#/components/schemas/instance'
-          dataCenter:
-            $ref: '#/components/schemas/ClusterDCInfo'
-    ClusterRequestProgress:
-      type: object
-      x-public: true
-      properties:
-        progressPercent:
-          type: integer
-          description: Request processing progress
-        progressDescription:
-          type: string
-          description: Request progress description
-    ClusterNetwork:
-      type: object
-      x-public: true
-      properties:
+          description: ID of the account where cluster belongs to
         clusterId:
           type: integer
           description: ID of the cluster where the datacenter belongs to
+        connectionID:
+          type: integer
         id:
           type: integer
-          description: ID of the VPC (internal for scylla-cloud)
-        cloudProviderId:
+          description: ID of the cluster request
+        progressDescription:
+          type: string
+          description: Request progress description
+        progressPercent:
           type: integer
-          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
-        regionId:
+          description: Request processing progress
+        requestBody:
+          type: string
+          description: JSON body of the request
+        requestType:
+          type: string
+          description: Defines type of the request
+          enum:
+          - ADD_DC
+          - CREATE_CLUSTER
+          - DELETE_CLUSTER
+          - RESIZE_CLUSTER_V2
+          - RESIZE_CLUSTER_V3
+          - UPGRADE_CLUSTER
+          - SCALE_CLUSTER
+          - INSTALL_MANAGER
+          - DNS
+          - CREATE_VPC_PEERING
+          - DELETE_VPC_PEERING
+          - CREATE_CLUSTER_CONNECTION
+          - DELETE_CLUSTER_CONNECTION
+          - UPDATE_CLUSTER_CONNECTION
+          - INSTALL_VECTOR_SEARCH
+          - RESIZE_VECTOR_SEARCH
+          - DELETE_VECTOR_SEARCH
+        status:
+          type: string
+          description: Status of the request
+          enum:
+          - QUEUED
+          - IN_PROGRESS
+          - FAILED
+          - COMPLETED
+          - CANCELLED
+        ticketExternalID:
+          description: External ID from Zendesk ticket
+          type: string
+        userFriendlyError:
+          type: string
+          description: Descriptive information about the potential error
+          deprecated: true
+        userId:
           type: integer
-          description: ID of the cloud provider region (full list [get] /deployment/cloud-provider/{}/regions)
-        cidrBlock:
-          $ref: '#/components/schemas/CIDR'
+          description: ID of the user who created the request
+        version:
+          type: integer
+          description: Version of the request. Always = 1
+        provisioning:
+          default: dedicated-vm
+          enum:
+          - dedicated-vm
+          type: string
+    ProvisionType:
+      type: string
+      enum:
+      - dedicated-vm
+      default: dedicated-vm
+      x-public: true
+      description: type of the cluster provisioning
     instance:
       type: object
       description: Cloud provider instance pricing description
@@ -947,36 +1319,6 @@ components:
         freeTier:
           description: This instance type can be used on a free tier cluster
           type: boolean
-    VectorSearch:
-      type: object
-      x-public: true
-      properties:
-        nodeCount:
-          description: Number of vector search nodes to create in the datacenter, nodes are distributed evenly across cluster racks
-          type: integer
-          example: 2
-          minimum: 1
-          maximum: 27
-        defaultInstanceTypeId:
-          type: integer
-          description: ID of the instance type to use for vector search nodes (instance type list [get] /deployment/cloud-provider/{}/region/{}?target=VECTOR_SEARCH)
-    ClusterDCInfoEnriched:
-      x-public: true
-      allOf:
-      - $ref: '#/components/schemas/ClusterDCInfo'
-      - type: object
-        properties:
-          cloudProvider:
-            $ref: '#/components/schemas/cloudProvider'
-          region:
-            $ref: '#/components/schemas/region'
-    APIDCScalingPolicyVCPU:
-      type: object
-      x-public: true
-      properties:
-        min:
-          type: integer
-          description: Minimum number of vCPUs
     ClusterEnriched:
       x-public: true
       allOf:
@@ -997,11 +1339,292 @@ components:
             description: ID of the instance type
           instance:
             $ref: '#/components/schemas/instance'
-    ClusterConnectionAwaitingData:
+    region:
+      type: object
+      description: Region and continent description
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the region (internal for scylla-cloud)
+          example: 30
+        externalId:
+          type: string
+          description: External ID of the cloud provider region
+          example: us-east1
+        cloudProviderId:
+          type: integer
+          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
+          example: 2
+        name:
+          type: string
+          description: Name of the region
+          example: us-east1
+        dcName:
+          type: string
+          description: Name of the data center
+          example: GCE_US_EAST_1
+        fullName:
+          type: string
+          description: Full name of the region
+          example: us-east1 (South Carolina)
+        continent:
+          type: string
+          description: Continent name
+        backupStorageGBCost:
+          type: number
+          description: Cost of storing 1 Gigabyte in backup
+          example: 0.02
+        trafficSameRegionInGBCost:
+          type: number
+          description: Cost of receiving 1 Gigabyte from the same region
+          example: 0
+        trafficSameRegionOutGBCost:
+          type: number
+          description: Cost of sending 1 Gigabyte to the same region
+          example: 0
+        trafficCrossRegionOutGBCost:
+          type: number
+          description: Cost of sending 1 Gigabyte to another region
+          example: 0
+        trafficInternetOutGBCost:
+          type: number
+          description: Cost of sending 1 Gigabyte to the internet
+          example: 0
+        multiRegionExternalId:
+          description: External ID of the cloud provider multi-region
+          example: us
+          type: string
+    APIDCScaling:
       type: object
       x-public: true
-      additionalProperties:
-        type: string
+      properties:
+        instanceFamilies:
+          type: array
+          items:
+            type: string
+        instanceTypeIDs:
+          type: array
+          items:
+            type: integer
+        policies:
+          $ref: '#/components/schemas/APIDCScalingPolicies'
+    ClusterInfo:
+      type: object
+      description: Information about the cluster
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the cluster
+        accountId:
+          type: integer
+          description: ID of the account where cluster belongs to
+        clusterName:
+          type: string
+          description: Name of the cluster
+        scalingMode:
+          type: object
+          description: Scaling mode of the cluster.
+          properties:
+            mode:
+              $ref: '#/components/schemas/ScalingMode'
+        status:
+          type: string
+          description: Status of the cluster
+          enum:
+          - ACTIVE
+          - QUEUED
+          - BOOTSTRAPPING
+          - BOOTSTRAP_ERROR
+          - INACTIVE
+          - PENDING_DELETE
+          - DELETED
+        cloudProviderId:
+          type: integer
+          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
+        encryptionAtRest:
+          $ref: '#/components/schemas/EncryptionAtRest'
+          description: 'Encryption at rest info for this cluster
+
+            Specifies the key id and provider
+
+            Empty if the cluster does not use the encryption-at-rest feature'
+        encryptionMode:
+          description: Defines how the client can connect to the cluster using CQL.
+          type: string
+        encryptionCertificateMode:
+          description: EncryptionCertificateMode when client connection is encrypted this property indicates if Cluster CA was signed with Account CA
+          type: string
+        userApiInterface:
+          type: string
+          description: CQL or ALTERNATOR (DynamoDB)
+          enum:
+          - CQL
+          - ALTERNATOR
+        deals:
+          type: array
+          description: deals in use of the cluster
+          items:
+            $ref: '#/components/schemas/DealsInUse'
+        isLocked:
+          type: boolean
+          description: Indicates whether the cluster is currently locked due to an ongoing operation
+        pricingModel:
+          type: integer
+          description: Defines the pricing model
+        maxAllowedCIDRRange:
+          type: integer
+          description: Max CIDR range the user is allowed to specify on allowed ips rules, 0 disable all limitations.
+        dns:
+          type: boolean
+          description: DNS enabled flag
+        dcCount:
+          type: integer
+          description: Number of Data Centers
+        dc:
+          $ref: '#/components/schemas/ClusterDCInfo'
+        provisioning:
+          $ref: '#/components/schemas/ProvisionType'
+        alternatorWriteIsolation:
+          type: string
+          description: Write isolation for ALTERNATOR
+          enum:
+          - ''
+          - forbid
+          - only_rmw_uses_lwt
+          - always
+        expiresAt:
+          type: string
+        progress:
+          $ref: '#/components/schemas/ClusterRequestProgress'
+        accountCloudProviderCredentialsId:
+          type: integer
+          description: ID of the account credentials
+        requestError:
+          type: string
+          description: Descriptive information about the potential error
+        scyllaVersion:
+          $ref: '#/components/schemas/scyllaVersion'
+      required:
+      - id
+      - accountId
+      - clusterName
+      - status
+      - cloudProviderId
+      - scyllaVersion
+    ClusterConnection:
+      type: object
+      description: Peering details information
+      x-public: true
+      properties:
+        awaitingData:
+          allOf:
+          - type: object
+          - $ref: '#/components/schemas/ClusterConnectionAwaitingData'
+          description: AwaitingData represents information regarding the action that needs to be done to move connection creating process further
+        awaitingForClient:
+          type: boolean
+          description: AwaitingForClient if true, then going to next stage require user action
+        cidrlist:
+          type: array
+          description: CIDR list of the routes cluster have access through this connection
+          items:
+            $ref: '#/components/schemas/CIDR'
+        clusterDCID:
+          type: integer
+          description: ID of the cluster DC
+        clusterID:
+          type: integer
+          description: ID of the cluster
+        clusterVPCID:
+          type: integer
+          description: ID of the VPC
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        externalID:
+          type: string
+          description: ExternalID and ID of the connection object on the cloud
+        id:
+          type: integer
+          description: ID of the created connection (ScyllaDB internal)
+        name:
+          type: string
+          description: Name if the connection, only to show on UI
+        stage:
+          type: string
+          description: Stage if there is ongoing process it shows where this process exactly at
+        stageMessage:
+          type: string
+          description: StageMessage is a message from stage processor why it can't move further
+        status:
+          type: string
+          enum:
+          - INIT
+          - PENDING
+          - ACTIVE
+          - INACTIVE
+          - DELETING
+          - DELETED
+          - FAILED
+        type:
+          type: string
+          enum:
+          - AWS_TGW_ATTACHMENT
+    scyllaVersion:
+      type: object
+      description: Represent version of the ScyllaDB installed on nodes
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the service version
+          example: 103
+        version:
+          type: string
+          description: Name of the service version
+          example: 2021.1.16
+        description:
+          type: string
+          description: Version description
+          example: Scylla Enterprise 2021.1.16
+        newCluster:
+          type: string
+          description: Describes if this version should be available for creating new clusters using the frontend wizard
+          example: DISABLED
+          enum:
+          - ENABLED
+          - DISABLED
+        serviceId:
+          type: integer
+          description: ID of the service
+          example: 1
+        name:
+          type: string
+          description: Version name
+          example: Scylla Enterprise
+    ScalingMode:
+      type: string
+      description: Scaling mode of the cluster
+      x-public: true
+      enum:
+      - standard
+      - xcloud
+      x-enum-varnames:
+      - ScalingStandard
+      - ScalingXCloud
+    ClusterRequestProgress:
+      type: object
+      x-public: true
+      properties:
+        progressPercent:
+          type: integer
+          description: Request processing progress
+        progressDescription:
+          type: string
+          description: Request progress description
     cloudProvider:
       type: object
       description: Cloud provider description
@@ -1019,162 +1642,29 @@ components:
           type: string
           description: Cloud provider account ID
           example: '123456789012'
-    ProvisionType:
-      type: string
-      enum:
-      - dedicated-vm
-      default: dedicated-vm
-      x-public: true
-      description: type of the cluster provisioning
-    APIDCScalingPolicies:
+    ClusterResizeRequest:
       type: object
       x-public: true
       properties:
-        storage:
-          $ref: '#/components/schemas/APIDCScalingPolicyStorage'
-        vcpu:
-          $ref: '#/components/schemas/APIDCScalingPolicyVCPU'
-    ClusterRequest:
-      type: object
+        dcNodes:
+          type: array
+          description: Mapping for the requested changes for each DC
+          items:
+            $ref: '#/components/schemas/ClusterResizeDCNodes'
+    ClusterNotification:
       x-public: true
+      type: object
       properties:
-        accountId:
-          type: integer
-          description: ID of the account where cluster belongs to
         clusterId:
+          description: ID of the cluster
           type: integer
-          description: ID of the cluster where the datacenter belongs to
-        connectionID:
-          type: integer
-        id:
-          type: integer
-          description: ID of the cluster request
-        progressDescription:
+        clusterName:
+          description: Name of the cluster
           type: string
-          description: Request progress description
-        progressPercent:
-          type: integer
-          description: Request processing progress
-        requestBody:
-          type: string
-          description: JSON body of the request
-        requestType:
-          type: string
-          description: Defines type of the request
-          enum:
-          - ADD_DC
-          - CREATE_CLUSTER
-          - DELETE_CLUSTER
-          - RESIZE_CLUSTER_V2
-          - RESIZE_CLUSTER_V3
-          - UPGRADE_CLUSTER
-          - SCALE_CLUSTER
-          - INSTALL_MANAGER
-          - DNS
-          - CREATE_VPC_PEERING
-          - DELETE_VPC_PEERING
-          - CREATE_CLUSTER_CONNECTION
-          - DELETE_CLUSTER_CONNECTION
-          - UPDATE_CLUSTER_CONNECTION
-          - INSTALL_VECTOR_SEARCH
-          - RESIZE_VECTOR_SEARCH
-          - DELETE_VECTOR_SEARCH
-        status:
-          type: string
-          description: Status of the request
-          enum:
-          - QUEUED
-          - IN_PROGRESS
-          - FAILED
-          - COMPLETED
-          - CANCELLED
-        ticketExternalID:
-          description: External ID from Zendesk ticket
-          type: string
-        userFriendlyError:
-          type: string
-          description: Descriptive information about the potential error
-          deprecated: true
-        userId:
-          type: integer
-          description: ID of the user who created the request
-        version:
-          type: integer
-          description: Version of the request. Always = 1
-        provisioning:
-          default: dedicated-vm
-          enum:
-          - dedicated-vm
-          type: string
-    ClusterDetailedInfo:
-      x-public: true
-      allOf:
-      - $ref: '#/components/schemas/ClusterEnriched'
-      - type: object
-        properties:
-          replicationFactor:
-            type: integer
-            description: Replication Factor (RF)
-          broadcastType:
+        emails:
+          type: array
+          items:
             type: string
-            description: Broadcast type
-            enum:
-            - PRIVATE
-            - PUBLIC
-          grafanaUrl:
-            type: string
-            description: URL of grafana (part of Monitoring Stack)
-          createdAt:
-            type: string
-            description: Creation date
-            format: date-time
-          promProxyEnabled:
-            type: boolean
-            description: Prometheus proxy enabled flag
-          rebootEnabled:
-            type: boolean
-            description: Determines if node reboot is enabled
-          clientIp:
-            type: string
-          allowedIps:
-            type: array
-            description: List of CIDR formatted rules a.b.c.d/e
-            items:
-              $ref: '#/components/schemas/FirewallRule'
-          dataCenters:
-            type: array
-            items:
-              $ref: '#/components/schemas/ClusterDCInfoEnriched'
-          nodes:
-            type: array
-            items:
-              $ref: '#/components/schemas/NodeInfoEnriched'
-          vpcList:
-            type: array
-            items:
-              $ref: '#/components/schemas/ClusterNetwork'
-          vpcPeeringList:
-            type: array
-            items:
-              $ref: '#/components/schemas/ClusterVPCPeeringInfo'
-          connections:
-            type: array
-            items:
-              $ref: '#/components/schemas/ClusterConnection'
-    ClusterCreateResponse:
-      x-public: true
-      allOf:
-      - $ref: '#/components/schemas/ClusterCreateRequestV1'
-      - type: object
-        properties:
-          cloudProvider:
-            $ref: '#/components/schemas/cloudProvider'
-          scyllaVersion:
-            $ref: '#/components/schemas/scyllaVersion'
-          region:
-            $ref: '#/components/schemas/region'
-          instance:
-            $ref: '#/components/schemas/instance'
     ClusterCreateRequestV1:
       type: object
       x-public: true
@@ -1291,504 +1781,14 @@ components:
         vectorSearch:
           $ref: '#/components/schemas/VectorSearch'
           description: VectorSearch is the optional specification to enable vector search capabilities for the Scylla cluster.
-    ClusterResizeResponse:
-      x-public: true
-      properties:
-        accountID:
-          description: ID of the account which was used to create the request
-          type: integer
-        clusterID:
-          description: ID of the cluster
-          type: integer
-        id:
-          description: ID of the request
-          type: integer
-        progressDescription:
-          description: Request progress description
-          type: string
-        progressPercent:
-          description: Request processing progress
-          type: integer
-        provisioning:
-          default: dedicated-vm
-          enum:
-          - dedicated-vm
-          type: string
-        requestBody:
-          description: JSON body of the request
-          type: string
-        requestType:
-          description: Defines the type of the request
-          enum:
-          - RESIZE_CLUSTER_V2
-          - RESIZE_CLUSTER_V3
-          type: string
-        status:
-          description: Status of the request
-          enum:
-          - QUEUED
-          - IN_PROGRESS
-          - FAILED
-          - COMPLETED
-          - CANCELLED
-          type: string
-        userFriendlyError:
-          type: string
-          description: Descriptive information about the potential error
-          deprecated: true
-        userID:
-          description: ID of the user who created the request
-          type: integer
-        version:
-          description: Version of the request. Always = 1
-          type: integer
-      type: object
-    ClusterDCInfo:
+    APIDCScalingPolicies:
       type: object
       x-public: true
       properties:
-        id:
-          type: integer
-          description: ID of the datacenter
-        clusterId:
-          type: integer
-          description: ID of the cluster where the datacenter belongs to
-        cloudProviderId:
-          type: integer
-          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
-        regionId:
-          type: integer
-          description: ID of the cloud provider region (full list [get] /deployment/cloud-provider/{}/regions)
-        replicationFactor:
-          type: integer
-          description: Replication Factor (RF)
-        cidrBlock:
-          $ref: '#/components/schemas/CIDR'
-        accountCloudProviderCredentialsId:
-          type: integer
-          description: ID of the account credentials
-        status:
-          type: string
-          description: Status of the data center
-          enum:
-          - ACTIVE
-          - INIT
-          - INACTIVE
-          - DELETED
-          - BOOTSTRAP_COMPLETE
-          - BOOTSTRAP_ERROR
-          - JOINING
-          - JOINING_ERROR
-        name:
-          type: string
-          description: Name of the data center
-        instanceId:
-          type: integer
-          description: ID of the instance type
-        scaling:
-          allOf:
-          - $ref: '#/components/schemas/APIDCScaling'
-          description: Datacenter scaling information.
-    NodeInfo:
-      type: object
-      x-public: true
-      properties:
-        azName:
-          type: string
-          description: Name of the availability zone
-        azId:
-          type: string
-          description: ID of the availability zone
-        rackName:
-          type: string
-          description: Name of the rack
-        billingStartDate:
-          type: string
-          description: Starting date for the billing
-        cloudProviderId:
-          type: integer
-          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
-        instanceId:
-          type: integer
-          description: ID of the instance type
-        regionId:
-          type: integer
-          description: ID of the cloud provider region (full list [get] /deployment/cloud-providers/{}/regions)
-        dcId:
-          type: integer
-          description: ID of the datacenter
-        clusterJoinDate:
-          type: string
-          description: Date when server joined the cluster
-        dns:
-          type: string
-          description: Server's DNS name
-        id:
-          type: integer
-          description: ID of the node
-        state:
-          type: string
-          description: Status of the node
-          enum:
-          - NORMAL
-          - JOINING
-          - LEAVING
-          - DECOMMISSIONED
-          - MOVING
-          - REMOVED
-        privateIp:
-          type: string
-          description: Private IP of the node
-        publicIp:
-          type: string
-          description: Public IP of the node
-        serviceId:
-          description: Deprecated
-          type: integer
-          deprecated: true
-        serviceVersionId:
-          description: Deprecated
-          type: integer
-          deprecated: true
-        status:
-          type: string
-          description: Status of the node
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - PENDING_DELETE
-          - DELETED
-          - QUEUED
-    ClusterMaintenanceWindow:
-      x-public: true
-      properties:
-        duration:
-          type: integer
-          description: only 3-hour time windows are allowed (10800000 seconds)
-          example: 10800000
-        rrule:
-          type: string
-          example: FREQ=DAILY;BYDAY=WE;BYHOUR=14;BYMINUTE=0;BYSECOND=0
-    region:
-      type: object
-      description: Region and continent description
-      x-public: true
-      properties:
-        id:
-          type: integer
-          description: ID of the region (internal for scylla-cloud)
-          example: 30
-        externalId:
-          type: string
-          description: External ID of the cloud provider region
-          example: us-east1
-        cloudProviderId:
-          type: integer
-          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
-          example: 2
-        name:
-          type: string
-          description: Name of the region
-          example: us-east1
-        dcName:
-          type: string
-          description: Name of the data center
-          example: GCE_US_EAST_1
-        fullName:
-          type: string
-          description: Full name of the region
-          example: us-east1 (South Carolina)
-        continent:
-          type: string
-          description: Continent name
-        backupStorageGBCost:
-          type: number
-          description: Cost of storing 1 Gigabyte in backup
-          example: 0.02
-        trafficSameRegionInGBCost:
-          type: number
-          description: Cost of receiving 1 Gigabyte from the same region
-          example: 0
-        trafficSameRegionOutGBCost:
-          type: number
-          description: Cost of sending 1 Gigabyte to the same region
-          example: 0
-        trafficCrossRegionOutGBCost:
-          type: number
-          description: Cost of sending 1 Gigabyte to another region
-          example: 0
-        trafficInternetOutGBCost:
-          type: number
-          description: Cost of sending 1 Gigabyte to the internet
-          example: 0
-        multiRegionExternalId:
-          description: External ID of the cloud provider multi-region
-          example: us
-          type: string
-    MetricName:
-      type: string
-      x-public: true
-      description: Available metric names for cluster monitoring
-      enum:
-      - NODES_UP
-      - NODES_DOWN
-      - STORAGE_FREE
-      - STORAGE_USED
-      - STORAGE_FREE_SANDBOX
-      - STORAGE_USED_SANDBOX
-      - STORAGE_UTILIZATION_AVG_30D
-      - STORAGE_UTILIZATION_AVG_30D_SANDBOX
-      - CPU_LOAD
-      - TOTAL_REQUESTS_RATE
-      - READS_RATE
-      - WRITES_RATE
-      - LATENCY_READ_AVERAGE
-      - LATENCY_READ_95TH
-      - LATENCY_WRITE_AVERAGE
-      - LATENCY_WRITE_95TH
-      - ALTERNATOR_LATENCY_GETITEM_AVERAGE
-      - ALTERNATOR_LATENCY_PUTITEM_AVERAGE
-      - ALTERNATOR_LATENCY_GETITEM_95TH
-      - ALTERNATOR_LATENCY_PUTITEM_95TH
-      - ALTERNATOR_GETITEM_NUM_OPS
-      - ALTERNATOR_PUTITEM_NUM_OPS
-      - ALTERNATOR_QUERY_NUM_OPS
-      - ALTERNATOR_SCAN_NUM_OPS
-    APIDCScaling:
-      type: object
-      x-public: true
-      properties:
-        instanceFamilies:
-          type: array
-          items:
-            type: string
-        instanceTypeIDs:
-          type: array
-          items:
-            type: integer
-        policies:
-          $ref: '#/components/schemas/APIDCScalingPolicies'
-    APIDCScalingPolicyStorage:
-      type: object
-      x-public: true
-      properties:
-        min:
-          type: integer
-          description: 'Minimum storage size for your cluster, in GB. This total provisioned
-
-            storage will not be fully available for data, because the data takes
-
-            more storage than its size due to replication.'
-        targetUtilization:
-          type: number
-          description: Target utilization ratio. Percentage, 0 to 1
-          format: float64
-    DealsInUse:
-      type: object
-      x-public: true
-      properties:
-        expiresAt:
-          type: string
-        type:
-          type: string
-          description: Type of the deal
-          enum:
-          - FREE_TIER
-          - JUMP_START
-    CIDR:
-      type: string
-      description: CIDR block in the form of ip/mask
-      x-public: true
-      example: 192.0.2.0/24
-    ClusterWithMetrics:
-      x-public: true
-      allOf:
-      - $ref: '#/components/schemas/ClusterInfo'
-      - type: object
-        properties:
-          instanceId:
-            type: integer
-            description: ID of the instance type
-          metrics:
-            type: object
-            additionalProperties:
-              type: number
-              description: Map of cluster metrics [metric_name | value]
-    ScalingMode:
-      type: string
-      description: Scaling mode of the cluster
-      x-public: true
-      enum:
-      - standard
-      - xcloud
-      x-enum-varnames:
-      - ScalingStandard
-      - ScalingXCloud
-    ClusterInfo:
-      type: object
-      description: Information about the cluster
-      x-public: true
-      properties:
-        id:
-          type: integer
-          description: ID of the cluster
-        accountId:
-          type: integer
-          description: ID of the account where cluster belongs to
-        clusterName:
-          type: string
-          description: Name of the cluster
-        scalingMode:
-          type: object
-          description: Scaling mode of the cluster.
-          properties:
-            mode:
-              $ref: '#/components/schemas/ScalingMode'
-        status:
-          type: string
-          description: Status of the cluster
-          enum:
-          - ACTIVE
-          - QUEUED
-          - BOOTSTRAPPING
-          - BOOTSTRAP_ERROR
-          - INACTIVE
-          - PENDING_DELETE
-          - DELETED
-        cloudProviderId:
-          type: integer
-          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
-        encryptionAtRest:
-          $ref: '#/components/schemas/EncryptionAtRest'
-          description: 'Encryption at rest info for this cluster
-
-            Specifies the key id and provider
-
-            Empty if the cluster does not use the encryption-at-rest feature'
-        encryptionMode:
-          description: Defines how the client can connect to the cluster using CQL.
-          type: string
-        encryptionCertificateMode:
-          description: EncryptionCertificateMode when client connection is encrypted this property indicates if Cluster CA was signed with Account CA
-          type: string
-        userApiInterface:
-          type: string
-          description: CQL or ALTERNATOR (DynamoDB)
-          enum:
-          - CQL
-          - ALTERNATOR
-        deals:
-          type: array
-          description: deals in use of the cluster
-          items:
-            $ref: '#/components/schemas/DealsInUse'
-        isLocked:
-          type: boolean
-          description: Indicates whether the cluster is currently locked due to an ongoing operation
-        pricingModel:
-          type: integer
-          description: Defines the pricing model
-        maxAllowedCIDRRange:
-          type: integer
-          description: Max CIDR range the user is allowed to specify on allowed ips rules, 0 disable all limitations.
-        dns:
-          type: boolean
-          description: DNS enabled flag
-        dcCount:
-          type: integer
-          description: Number of Data Centers
-        dc:
-          $ref: '#/components/schemas/ClusterDCInfo'
-        provisioning:
-          $ref: '#/components/schemas/ProvisionType'
-        alternatorWriteIsolation:
-          type: string
-          description: Write isolation for ALTERNATOR
-          enum:
-          - ''
-          - forbid
-          - only_rmw_uses_lwt
-          - always
-        expiresAt:
-          type: string
-        progress:
-          $ref: '#/components/schemas/ClusterRequestProgress'
-        accountCloudProviderCredentialsId:
-          type: integer
-          description: ID of the account credentials
-        requestError:
-          type: string
-          description: Descriptive information about the potential error
-        scyllaVersion:
-          $ref: '#/components/schemas/scyllaVersion'
-      required:
-      - id
-      - accountId
-      - clusterName
-      - status
-      - cloudProviderId
-      - scyllaVersion
-    ClusterVPCPeeringInfo:
-      type: object
-      x-public: true
-      properties:
-        externalId:
-          type: string
-          description: External ID of the VPC peering
-          example: pcx-21f1c5d76e55f2b0c
-        id:
-          type: integer
-          description: ID of the VPC peering (scyllaDB internal)
-        networkName:
-          type: string
-          description: Name of the network (GCP specific)
-        ownerId:
-          type: string
-          description: Owner of the peering (AWS account ID or GCP project ID)
-        vpcId:
-          type: string
-          description: Peer VPC external ID
-          example: vpc-11f1c5d76e55f2b0c
-        cidrList:
-          description: List of CIDRs
-          items:
-            $ref: '#/components/schemas/CIDR'
-          type: array
-        cidrBlockVerified:
-          type: array
-          description: List of CIDRs
-          items:
-            $ref: '#/components/schemas/CIDR'
-        regionId:
-          type: integer
-          description: ID of the cloud provider region, returned for AWS clusters only (full list [get] /deployment/cloud-provider/{}/regions)
-        projectId:
-          type: string
-          description: GCP Project ID (GCP specific)
-        status:
-          type: string
-          description: Status of the VPC peering
-          enum:
-          - INITIATING_REQUEST
-          - PENDING_ACCEPTANCE
-          - DELETING
-          - DELETED
-          - FAILED
-          - REJECTED
-          - EXPIRED
-          - PROVISIONING
-          - ACTIVE
-          - MISMATCHED
-          - INACTIVE
-        expiresAt:
-          type: string
-          description: Expiration time
-        allowCql:
-          type: boolean
-          description: Is CQL connection allowed for peering CIDRs
-        dcId:
-          description: ID of the cluster's data center
-          type: integer
+        storage:
+          $ref: '#/components/schemas/APIDCScalingPolicyStorage'
+        vcpu:
+          $ref: '#/components/schemas/APIDCScalingPolicyVCPU'
   securitySchemes:
     Authorization:
       type: http

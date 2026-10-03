@@ -340,40 +340,6 @@ paths:
           description: Bad Gateway
 components:
   schemas:
-    Account:
-      x-public: true
-      properties:
-        accountId:
-          description: ID of the account
-          type: integer
-        accountStatus:
-          description: Status of the account
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - DELETED
-          type: string
-        role:
-          description: Defines user role within the account
-          enum:
-          - ADMIN
-          - MAINTAINER
-          - VIEWER
-          type: string
-        userAccountStatus:
-          description: User account status
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - DELETED
-          type: string
-        name:
-          description: Account name
-          type: string
-        userId:
-          description: ID of the user
-          type: integer
-      type: object
     CloudAccount:
       x-public: true
       properties:
@@ -467,6 +433,40 @@ components:
         transientError:
           description: TransientError contains the last transient error, if any
           type: string
+      type: object
+    Account:
+      x-public: true
+      properties:
+        accountId:
+          description: ID of the account
+          type: integer
+        accountStatus:
+          description: Status of the account
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DELETED
+          type: string
+        role:
+          description: Defines user role within the account
+          enum:
+          - ADMIN
+          - MAINTAINER
+          - VIEWER
+          type: string
+        userAccountStatus:
+          description: User account status
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DELETED
+          type: string
+        name:
+          description: Account name
+          type: string
+        userId:
+          description: ID of the user
+          type: integer
       type: object
   securitySchemes:
     Authorization:

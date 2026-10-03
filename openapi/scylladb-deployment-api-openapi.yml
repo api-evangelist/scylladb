@@ -189,23 +189,6 @@ paths:
                     - instances
 components:
   schemas:
-    cloudProvider:
-      type: object
-      description: Cloud provider description
-      x-public: true
-      properties:
-        id:
-          type: integer
-          description: ID of the cloud provider (internal for scylla-cloud)
-          example: 1
-        name:
-          type: string
-          description: Name of the cloud provider
-          example: AWS
-        rootAccountId:
-          type: string
-          description: Cloud provider account ID
-          example: '123456789012'
     instance:
       type: object
       description: Cloud provider instance pricing description
@@ -315,13 +298,23 @@ components:
         freeTier:
           description: This instance type can be used on a free tier cluster
           type: boolean
-    errorObject:
+    cloudProvider:
       type: object
+      description: Cloud provider description
       x-public: true
       properties:
-        error:
+        id:
+          type: integer
+          description: ID of the cloud provider (internal for scylla-cloud)
+          example: 1
+        name:
           type: string
-          example: '040101'
+          description: Name of the cloud provider
+          example: AWS
+        rootAccountId:
+          type: string
+          description: Cloud provider account ID
+          example: '123456789012'
     region:
       type: object
       description: Region and continent description
@@ -410,6 +403,13 @@ components:
           type: string
           description: Version name
           example: Scylla Enterprise
+    errorObject:
+      type: object
+      x-public: true
+      properties:
+        error:
+          type: string
+          example: '040101'
   securitySchemes:
     Authorization:
       type: http

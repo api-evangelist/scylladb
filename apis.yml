@@ -285,6 +285,9 @@ apis:
   - type: Examples
     url: examples/scylladb-firewall-rules-example.json
 common:
+  - type: CapabilityMap
+    url: capabilities/scylladb-capability-edges.yml
+    name: ScyllaDB Business Capability Map
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/scylladb/overview
   - type: AgenticAccess

@@ -1,0 +1,58 @@
+slug: scylladb
+provider: ScyllaDB
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Cluster
+  spec_file: scylladb-cluster-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /account/{accountId}/cluster createCluster "Create cluster-create request (async)"; "Resize
+    cluster (async)"; "Get cluster nodes"
+  reason: Operations provision, resize, scale and delete managed database clusters and their nodes/datacenters
+    in a cloud account — this is compute/storage infrastructure lifecycle management, i.e. IT Infrastructure
+    Management. No business-domain capability is realised by cluster CRUD.
+- tag: Account Cluster Network
+  spec_file: scylladb-account-cluster-network-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: POST /account/{accountId}/cluster/{clusterId}/network/firewall/allowed — "Create a new firewall
+    allowed rule"; POST .../network/vpc/peer — "Create VPC peering according to given request payload"
+  reason: Operations create and manage firewall allow rules and VPC peerings for database clusters — configuration
+    of cloud network infrastructure, which maps to IT Infrastructure Management (compute, storage, network,
+    cloud). Some pull toward security/network controls, hence not maximal confidence.
+- tag: Vector Search
+  spec_file: scylladb-vector-search-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: POST .../vector-search installVectorSearch "Install vector search nodes to the specified datacenter
+    in the cluster (async)"; schema VectorSearchNode, CPUInfo, MemoryInfo
+  reason: Despite the 'Search' noun, the operations install, resize and delete dedicated compute nodes
+    within a datacenter — node/capacity provisioning of database infrastructure, not an end-user search
+    business function.
+- tag: Account network cluster connection
+  spec_file: scylladb-account-network-cluster-connection-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /account/{accountId}/cluster/{clusterId}/network/vpc/connection — "creates connection
+    according to given request payload"; schema ClusterConnection
+  reason: Lifecycle (create, read, update, recreate, delete) of VPC network connections to database clusters.
+    This is cloud network infrastructure provisioning, not a customer-facing or commercial capability.

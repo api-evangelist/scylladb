@@ -241,25 +241,23 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    VectorSearchInfo:
+    VectorSearchStatus:
+      x-public: true
+      enum:
+      - HEALTHY
+      - DEGRADED
+      - UNHEALTHY
+      - UNKNOWN
+      type: string
+      x-enum-varnames:
+      - vectorSearchStatusHealthy
+      - vectorSearchStatusDegraded
+      - vectorSearchStatusUnhealthy
+      - vectorSearchStatusUnknown
+    CPUInfo:
       type: object
-      description: Information about a vector search node in a cluster datacenter
       x-public: true
       properties:
-        availabilityZones:
-          type: array
-          description: List of availability zones where vector search nodes are deployed
-          items:
-            $ref: '#/components/schemas/AvailabilityZone'
-        status:
-          $ref: '#/components/schemas/VectorSearchStatus'
-    MemoryInfo:
-      type: object
-      x-public: true
-      properties:
-        freeGiB:
-          format: float64
-          type: number
         usagePercent:
           format: float64
           type: number
@@ -335,6 +333,56 @@ components:
           enum:
           - dedicated-vm
           type: string
+    AvailabilityZone:
+      type: object
+      description: Details about the availability zone where vector search nodes are deployed
+      x-public: true
+      properties:
+        azid:
+          type: string
+          description: ID of the availability zone
+          example: use1-az5
+        rackName:
+          type: string
+          description: Name of the rack
+          example: use1-az5
+        nodes:
+          type: array
+          description: List of vector search nodes in the availability zone
+          items:
+            $ref: '#/components/schemas/VectorSearchNode'
+    MemoryInfo:
+      type: object
+      x-public: true
+      properties:
+        freeGiB:
+          format: float64
+          type: number
+        usagePercent:
+          format: float64
+          type: number
+    VectorSearchNodeStatus:
+      type: string
+      description: Status of the node
+      x-public: true
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - PENDING_DELETE
+      - DELETED
+      - QUEUED
+    VectorSearchInfo:
+      type: object
+      description: Information about a vector search node in a cluster datacenter
+      x-public: true
+      properties:
+        availabilityZones:
+          type: array
+          description: List of availability zones where vector search nodes are deployed
+          items:
+            $ref: '#/components/schemas/AvailabilityZone'
+        status:
+          $ref: '#/components/schemas/VectorSearchStatus'
     VectorSearchRequest:
       type: object
       description: Parameters for adding vector search nodes to an existing cluster
@@ -377,54 +425,6 @@ components:
         indexCount:
           description: Number of vector search indexes stored on the node.
           type: integer
-    AvailabilityZone:
-      type: object
-      description: Details about the availability zone where vector search nodes are deployed
-      x-public: true
-      properties:
-        azid:
-          type: string
-          description: ID of the availability zone
-          example: use1-az5
-        rackName:
-          type: string
-          description: Name of the rack
-          example: use1-az5
-        nodes:
-          type: array
-          description: List of vector search nodes in the availability zone
-          items:
-            $ref: '#/components/schemas/VectorSearchNode'
-    VectorSearchStatus:
-      x-public: true
-      enum:
-      - HEALTHY
-      - DEGRADED
-      - UNHEALTHY
-      - UNKNOWN
-      type: string
-      x-enum-varnames:
-      - vectorSearchStatusHealthy
-      - vectorSearchStatusDegraded
-      - vectorSearchStatusUnhealthy
-      - vectorSearchStatusUnknown
-    VectorSearchNodeStatus:
-      type: string
-      description: Status of the node
-      x-public: true
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - PENDING_DELETE
-      - DELETED
-      - QUEUED
-    CPUInfo:
-      type: object
-      x-public: true
-      properties:
-        usagePercent:
-          format: float64
-          type: number
   securitySchemes:
     Authorization:
       type: http

@@ -523,6 +523,67 @@ paths:
           description: Internal Server Error
 components:
   schemas:
+    ClusterVPCPeeringInfo:
+      type: object
+      x-public: true
+      properties:
+        externalId:
+          type: string
+          description: External ID of the VPC peering
+          example: pcx-21f1c5d76e55f2b0c
+        id:
+          type: integer
+          description: ID of the VPC peering (scyllaDB internal)
+        networkName:
+          type: string
+          description: Name of the network (GCP specific)
+        ownerId:
+          type: string
+          description: Owner of the peering (AWS account ID or GCP project ID)
+        vpcId:
+          type: string
+          description: Peer VPC external ID
+          example: vpc-11f1c5d76e55f2b0c
+        cidrList:
+          description: List of CIDRs
+          items:
+            $ref: '#/components/schemas/CIDR'
+          type: array
+        cidrBlockVerified:
+          type: array
+          description: List of CIDRs
+          items:
+            $ref: '#/components/schemas/CIDR'
+        regionId:
+          type: integer
+          description: ID of the cloud provider region, returned for AWS clusters only (full list [get] /deployment/cloud-provider/{}/regions)
+        projectId:
+          type: string
+          description: GCP Project ID (GCP specific)
+        status:
+          type: string
+          description: Status of the VPC peering
+          enum:
+          - INITIATING_REQUEST
+          - PENDING_ACCEPTANCE
+          - DELETING
+          - DELETED
+          - FAILED
+          - REJECTED
+          - EXPIRED
+          - PROVISIONING
+          - ACTIVE
+          - MISMATCHED
+          - INACTIVE
+        expiresAt:
+          type: string
+          description: Expiration time
+        allowCql:
+          type: boolean
+          description: Is CQL connection allowed for peering CIDRs
+        dcId:
+          description: ID of the cluster's data center
+          type: integer
     ClusterRequest:
       type: object
       x-public: true
@@ -613,67 +674,6 @@ components:
           description: ID of the firewall allowed rule
         address:
           $ref: '#/components/schemas/CIDR'
-    ClusterVPCPeeringInfo:
-      type: object
-      x-public: true
-      properties:
-        externalId:
-          type: string
-          description: External ID of the VPC peering
-          example: pcx-21f1c5d76e55f2b0c
-        id:
-          type: integer
-          description: ID of the VPC peering (scyllaDB internal)
-        networkName:
-          type: string
-          description: Name of the network (GCP specific)
-        ownerId:
-          type: string
-          description: Owner of the peering (AWS account ID or GCP project ID)
-        vpcId:
-          type: string
-          description: Peer VPC external ID
-          example: vpc-11f1c5d76e55f2b0c
-        cidrList:
-          description: List of CIDRs
-          items:
-            $ref: '#/components/schemas/CIDR'
-          type: array
-        cidrBlockVerified:
-          type: array
-          description: List of CIDRs
-          items:
-            $ref: '#/components/schemas/CIDR'
-        regionId:
-          type: integer
-          description: ID of the cloud provider region, returned for AWS clusters only (full list [get] /deployment/cloud-provider/{}/regions)
-        projectId:
-          type: string
-          description: GCP Project ID (GCP specific)
-        status:
-          type: string
-          description: Status of the VPC peering
-          enum:
-          - INITIATING_REQUEST
-          - PENDING_ACCEPTANCE
-          - DELETING
-          - DELETED
-          - FAILED
-          - REJECTED
-          - EXPIRED
-          - PROVISIONING
-          - ACTIVE
-          - MISMATCHED
-          - INACTIVE
-        expiresAt:
-          type: string
-          description: Expiration time
-        allowCql:
-          type: boolean
-          description: Is CQL connection allowed for peering CIDRs
-        dcId:
-          description: ID of the cluster's data center
-          type: integer
   securitySchemes:
     Authorization:
       type: http

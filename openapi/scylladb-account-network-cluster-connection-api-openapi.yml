@@ -416,6 +416,76 @@ paths:
       - Account network cluster connection
 components:
   schemas:
+    ClusterConnection:
+      type: object
+      description: Peering details information
+      x-public: true
+      properties:
+        awaitingData:
+          allOf:
+          - type: object
+          - $ref: '#/components/schemas/ClusterConnectionAwaitingData'
+          description: AwaitingData represents information regarding the action that needs to be done to move connection creating process further
+        awaitingForClient:
+          type: boolean
+          description: AwaitingForClient if true, then going to next stage require user action
+        cidrlist:
+          type: array
+          description: CIDR list of the routes cluster have access through this connection
+          items:
+            $ref: '#/components/schemas/CIDR'
+        clusterDCID:
+          type: integer
+          description: ID of the cluster DC
+        clusterID:
+          type: integer
+          description: ID of the cluster
+        clusterVPCID:
+          type: integer
+          description: ID of the VPC
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        externalID:
+          type: string
+          description: ExternalID and ID of the connection object on the cloud
+        id:
+          type: integer
+          description: ID of the created connection (ScyllaDB internal)
+        name:
+          type: string
+          description: Name if the connection, only to show on UI
+        stage:
+          type: string
+          description: Stage if there is ongoing process it shows where this process exactly at
+        stageMessage:
+          type: string
+          description: StageMessage is a message from stage processor why it can't move further
+        status:
+          type: string
+          enum:
+          - INIT
+          - PENDING
+          - ACTIVE
+          - INACTIVE
+          - DELETING
+          - DELETED
+          - FAILED
+        type:
+          type: string
+          enum:
+          - AWS_TGW_ATTACHMENT
+    ClusterConnectionAwaitingData:
+      type: object
+      x-public: true
+      additionalProperties:
+        type: string
+    CIDR:
+      type: string
+      description: CIDR block in the form of ip/mask
+      x-public: true
+      example: 192.0.2.0/24
     ClusterRequest:
       type: object
       x-public: true
@@ -488,76 +558,6 @@ components:
           enum:
           - dedicated-vm
           type: string
-    CIDR:
-      type: string
-      description: CIDR block in the form of ip/mask
-      x-public: true
-      example: 192.0.2.0/24
-    ClusterConnectionAwaitingData:
-      type: object
-      x-public: true
-      additionalProperties:
-        type: string
-    ClusterConnection:
-      type: object
-      description: Peering details information
-      x-public: true
-      properties:
-        awaitingData:
-          allOf:
-          - type: object
-          - $ref: '#/components/schemas/ClusterConnectionAwaitingData'
-          description: AwaitingData represents information regarding the action that needs to be done to move connection creating process further
-        awaitingForClient:
-          type: boolean
-          description: AwaitingForClient if true, then going to next stage require user action
-        cidrlist:
-          type: array
-          description: CIDR list of the routes cluster have access through this connection
-          items:
-            $ref: '#/components/schemas/CIDR'
-        clusterDCID:
-          type: integer
-          description: ID of the cluster DC
-        clusterID:
-          type: integer
-          description: ID of the cluster
-        clusterVPCID:
-          type: integer
-          description: ID of the VPC
-        data:
-          type: object
-          additionalProperties:
-            type: string
-        externalID:
-          type: string
-          description: ExternalID and ID of the connection object on the cloud
-        id:
-          type: integer
-          description: ID of the created connection (ScyllaDB internal)
-        name:
-          type: string
-          description: Name if the connection, only to show on UI
-        stage:
-          type: string
-          description: Stage if there is ongoing process it shows where this process exactly at
-        stageMessage:
-          type: string
-          description: StageMessage is a message from stage processor why it can't move further
-        status:
-          type: string
-          enum:
-          - INIT
-          - PENDING
-          - ACTIVE
-          - INACTIVE
-          - DELETING
-          - DELETED
-          - FAILED
-        type:
-          type: string
-          enum:
-          - AWS_TGW_ATTACHMENT
   securitySchemes:
     Authorization:
       type: http

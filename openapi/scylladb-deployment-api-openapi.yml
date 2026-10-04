@@ -189,115 +189,6 @@ paths:
                     - instances
 components:
   schemas:
-    instance:
-      type: object
-      description: Cloud provider instance pricing description
-      x-public: true
-      properties:
-        id:
-          type: integer
-          description: ID of the instance type (internal for scylla-cloud)
-          example: 40
-        externalId:
-          type: string
-          description: External ID of the cloud provider instance type
-          example: n2-highmem-2
-        cloudProviderId:
-          type: integer
-          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
-          example: 2
-        groupDefault:
-          type: boolean
-          description: GroupDefault says which one is the default in a group of matching external_id
-        displayOrder:
-          type: integer
-          description: Position when showing multiple instance types
-          example: 3
-        memory:
-          type: integer
-          description: Instance type RAM size in Megabytes
-          example: 16384
-        localDiskCount:
-          type: integer
-          description: Instance type disk count
-          example: 1
-        totalStorage:
-          type: integer
-          description: Instance type total storage size (uses base of 10 GB)
-          example: 375
-        cpuCount:
-          type: integer
-          description: Instance type CPU core count
-          example: 2
-        networkSpeed:
-          type: integer
-          description: Instance type network bandwidth in Megabytes per second
-          example: 10
-        networkSpeedDescription:
-          description: Network performance description
-          example: Maximum egress bandwidth, 10 Gbps
-          type: string
-        baseNetworkSpeed:
-          description: The network performance in Megabytes per second
-          example: 5
-          type: integer
-        externalStorageNetworkSpeed:
-          type: integer
-          description: Cloud provider storage bandwidth in Megabytes per second
-          example: 0
-        costPerHour:
-          type: number
-          description: Deprecated in favor of InstanceCostHourly
-          deprecated: true
-        environment:
-          type: string
-          description: Development clusters lack advanced features (e.g. Scylla Manager, monitoring alerts and many others) which are present in Production clusters
-          enum:
-          - PRODUCTION
-          - DEVELOPMENT
-        licenseCostOnDemandPerHour:
-          type: number
-          description: Deprecated in favor of SubscriptionCostHourly
-          deprecated: true
-        subscriptionCostHourly:
-          type: number
-          description: Scylla related part of the cost per hour
-          example: 0.0956
-        subscriptionCostHourlyXCloud:
-          type: number
-          description: Scylla related part of the cost per hour for XCloud
-          example: 0.12
-        subscriptionCostHourlyXCloudBYOA:
-          type: number
-          description: Scylla related part of the cost per hour for XCloud BYOA
-          example: 0.15
-        subscriptionCostMonthly:
-          type: number
-          description: Scylla related part of the cost per month
-          example: 54
-        subscriptionCostMonthlyXCloud:
-          type: number
-          description: Scylla related part of the cost per month for XCloud
-          example: 65
-        subscriptionCostYearly:
-          type: number
-          description: Scylla related part of the cost per year
-          example: 560
-        subscriptionCostYearlyXCloud:
-          type: number
-          description: Scylla related part of the cost per year for XCloud
-          example: 650
-        instanceCostHourly:
-          type: number
-          description: Cloud provider related part of the cost
-          example: 0.03
-        instanceFamily:
-          description: Describes instance type best price-performance workloads
-          example: n2
-          type: string
-        freeTier:
-          description: This instance type can be used on a free tier cluster
-          type: boolean
     cloudProvider:
       type: object
       description: Cloud provider description
@@ -410,6 +301,115 @@ components:
         error:
           type: string
           example: '040101'
+    instance:
+      type: object
+      description: Cloud provider instance pricing description
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the instance type (internal for scylla-cloud)
+          example: 40
+        externalId:
+          type: string
+          description: External ID of the cloud provider instance type
+          example: n2-highmem-2
+        cloudProviderId:
+          type: integer
+          description: ID of the cloud provider (full list [get] /deployment/cloud-providers)
+          example: 2
+        groupDefault:
+          type: boolean
+          description: GroupDefault says which one is the default in a group of matching external_id
+        displayOrder:
+          type: integer
+          description: Position when showing multiple instance types
+          example: 3
+        memory:
+          type: integer
+          description: Instance type RAM size in Megabytes
+          example: 16384
+        localDiskCount:
+          type: integer
+          description: Instance type disk count
+          example: 1
+        totalStorage:
+          type: integer
+          description: Instance type total storage size (uses base of 10 GB)
+          example: 375
+        cpuCount:
+          type: integer
+          description: Instance type CPU core count
+          example: 2
+        networkSpeed:
+          type: integer
+          description: Instance type network bandwidth in Megabytes per second
+          example: 10
+        networkSpeedDescription:
+          description: Network performance description
+          example: Maximum egress bandwidth, 10 Gbps
+          type: string
+        baseNetworkSpeed:
+          description: The network performance in Megabytes per second
+          example: 5
+          type: integer
+        externalStorageNetworkSpeed:
+          type: integer
+          description: Cloud provider storage bandwidth in Megabytes per second
+          example: 0
+        costPerHour:
+          type: number
+          description: Deprecated in favor of InstanceCostHourly
+          deprecated: true
+        environment:
+          type: string
+          description: Development clusters lack advanced features (e.g. Scylla Manager, monitoring alerts and many others) which are present in Production clusters
+          enum:
+          - PRODUCTION
+          - DEVELOPMENT
+        licenseCostOnDemandPerHour:
+          type: number
+          description: Deprecated in favor of SubscriptionCostHourly
+          deprecated: true
+        subscriptionCostHourly:
+          type: number
+          description: Scylla related part of the cost per hour
+          example: 0.0956
+        subscriptionCostHourlyXCloud:
+          type: number
+          description: Scylla related part of the cost per hour for XCloud
+          example: 0.12
+        subscriptionCostHourlyXCloudBYOA:
+          type: number
+          description: Scylla related part of the cost per hour for XCloud BYOA
+          example: 0.15
+        subscriptionCostMonthly:
+          type: number
+          description: Scylla related part of the cost per month
+          example: 54
+        subscriptionCostMonthlyXCloud:
+          type: number
+          description: Scylla related part of the cost per month for XCloud
+          example: 65
+        subscriptionCostYearly:
+          type: number
+          description: Scylla related part of the cost per year
+          example: 560
+        subscriptionCostYearlyXCloud:
+          type: number
+          description: Scylla related part of the cost per year for XCloud
+          example: 650
+        instanceCostHourly:
+          type: number
+          description: Cloud provider related part of the cost
+          example: 0.03
+        instanceFamily:
+          description: Describes instance type best price-performance workloads
+          example: n2
+          type: string
+        freeTier:
+          description: This instance type can be used on a free tier cluster
+          type: boolean
   securitySchemes:
     Authorization:
       type: http

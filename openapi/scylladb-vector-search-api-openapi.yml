@@ -241,26 +241,43 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    VectorSearchStatus:
-      x-public: true
-      enum:
-      - HEALTHY
-      - DEGRADED
-      - UNHEALTHY
-      - UNKNOWN
-      type: string
-      x-enum-varnames:
-      - vectorSearchStatusHealthy
-      - vectorSearchStatusDegraded
-      - vectorSearchStatusUnhealthy
-      - vectorSearchStatusUnknown
-    CPUInfo:
+    VectorSearchInfo:
       type: object
+      description: Information about a vector search node in a cluster datacenter
       x-public: true
       properties:
-        usagePercent:
-          format: float64
-          type: number
+        availabilityZones:
+          type: array
+          description: List of availability zones where vector search nodes are deployed
+          items:
+            $ref: '#/components/schemas/AvailabilityZone'
+        status:
+          $ref: '#/components/schemas/VectorSearchStatus'
+    VectorSearchNode:
+      type: object
+      description: Details about the vector search nodes in the rack
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the vector search node
+          example: 125
+        instanceTypeId:
+          type: integer
+          description: ID of the instance type used for the vector search node
+          example: 175
+        status:
+          $ref: '#/components/schemas/VectorSearchNodeStatus'
+        up:
+          description: Shows whether the node is up and running.
+          type: boolean
+        cpu:
+          $ref: '#/components/schemas/CPUInfo'
+        memory:
+          $ref: '#/components/schemas/MemoryInfo'
+        indexCount:
+          description: Number of vector search indexes stored on the node.
+          type: integer
     ClusterRequest:
       type: object
       x-public: true
@@ -333,6 +350,16 @@ components:
           enum:
           - dedicated-vm
           type: string
+    VectorSearchNodeStatus:
+      type: string
+      description: Status of the node
+      x-public: true
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - PENDING_DELETE
+      - DELETED
+      - QUEUED
     AvailabilityZone:
       type: object
       description: Details about the availability zone where vector search nodes are deployed
@@ -351,38 +378,13 @@ components:
           description: List of vector search nodes in the availability zone
           items:
             $ref: '#/components/schemas/VectorSearchNode'
-    MemoryInfo:
+    CPUInfo:
       type: object
       x-public: true
       properties:
-        freeGiB:
-          format: float64
-          type: number
         usagePercent:
           format: float64
           type: number
-    VectorSearchNodeStatus:
-      type: string
-      description: Status of the node
-      x-public: true
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - PENDING_DELETE
-      - DELETED
-      - QUEUED
-    VectorSearchInfo:
-      type: object
-      description: Information about a vector search node in a cluster datacenter
-      x-public: true
-      properties:
-        availabilityZones:
-          type: array
-          description: List of availability zones where vector search nodes are deployed
-          items:
-            $ref: '#/components/schemas/AvailabilityZone'
-        status:
-          $ref: '#/components/schemas/VectorSearchStatus'
     VectorSearchRequest:
       type: object
       description: Parameters for adding vector search nodes to an existing cluster
@@ -400,31 +402,29 @@ components:
         defaultInstanceTypeId:
           type: integer
           description: ID of the instance type to use for vector search nodes (instance type list [get] /deployment/cloud-provider/{}/region/{}?target=VECTOR_SEARCH)
-    VectorSearchNode:
+    VectorSearchStatus:
+      x-public: true
+      enum:
+      - HEALTHY
+      - DEGRADED
+      - UNHEALTHY
+      - UNKNOWN
+      type: string
+      x-enum-varnames:
+      - vectorSearchStatusHealthy
+      - vectorSearchStatusDegraded
+      - vectorSearchStatusUnhealthy
+      - vectorSearchStatusUnknown
+    MemoryInfo:
       type: object
-      description: Details about the vector search nodes in the rack
       x-public: true
       properties:
-        id:
-          type: integer
-          description: ID of the vector search node
-          example: 125
-        instanceTypeId:
-          type: integer
-          description: ID of the instance type used for the vector search node
-          example: 175
-        status:
-          $ref: '#/components/schemas/VectorSearchNodeStatus'
-        up:
-          description: Shows whether the node is up and running.
-          type: boolean
-        cpu:
-          $ref: '#/components/schemas/CPUInfo'
-        memory:
-          $ref: '#/components/schemas/MemoryInfo'
-        indexCount:
-          description: Number of vector search indexes stored on the node.
-          type: integer
+        freeGiB:
+          format: float64
+          type: number
+        usagePercent:
+          format: float64
+          type: number
   securitySchemes:
     Authorization:
       type: http

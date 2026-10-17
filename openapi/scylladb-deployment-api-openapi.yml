@@ -189,23 +189,38 @@ paths:
                     - instances
 components:
   schemas:
-    cloudProvider:
+    scyllaVersion:
       type: object
-      description: Cloud provider description
+      description: Represent version of the ScyllaDB installed on nodes
       x-public: true
       properties:
         id:
           type: integer
-          description: ID of the cloud provider (internal for scylla-cloud)
+          description: ID of the service version
+          example: 103
+        version:
+          type: string
+          description: Name of the service version
+          example: 2021.1.16
+        description:
+          type: string
+          description: Version description
+          example: Scylla Enterprise 2021.1.16
+        newCluster:
+          type: string
+          description: Describes if this version should be available for creating new clusters using the frontend wizard
+          example: DISABLED
+          enum:
+          - ENABLED
+          - DISABLED
+        serviceId:
+          type: integer
+          description: ID of the service
           example: 1
         name:
           type: string
-          description: Name of the cloud provider
-          example: AWS
-        rootAccountId:
-          type: string
-          description: Cloud provider account ID
-          example: '123456789012'
+          description: Version name
+          example: Scylla Enterprise
     region:
       type: object
       description: Region and continent description
@@ -262,38 +277,6 @@ components:
           description: External ID of the cloud provider multi-region
           example: us
           type: string
-    scyllaVersion:
-      type: object
-      description: Represent version of the ScyllaDB installed on nodes
-      x-public: true
-      properties:
-        id:
-          type: integer
-          description: ID of the service version
-          example: 103
-        version:
-          type: string
-          description: Name of the service version
-          example: 2021.1.16
-        description:
-          type: string
-          description: Version description
-          example: Scylla Enterprise 2021.1.16
-        newCluster:
-          type: string
-          description: Describes if this version should be available for creating new clusters using the frontend wizard
-          example: DISABLED
-          enum:
-          - ENABLED
-          - DISABLED
-        serviceId:
-          type: integer
-          description: ID of the service
-          example: 1
-        name:
-          type: string
-          description: Version name
-          example: Scylla Enterprise
     errorObject:
       type: object
       x-public: true
@@ -410,6 +393,23 @@ components:
         freeTier:
           description: This instance type can be used on a free tier cluster
           type: boolean
+    cloudProvider:
+      type: object
+      description: Cloud provider description
+      x-public: true
+      properties:
+        id:
+          type: integer
+          description: ID of the cloud provider (internal for scylla-cloud)
+          example: 1
+        name:
+          type: string
+          description: Name of the cloud provider
+          example: AWS
+        rootAccountId:
+          type: string
+          description: Cloud provider account ID
+          example: '123456789012'
   securitySchemes:
     Authorization:
       type: http
